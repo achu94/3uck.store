@@ -1,17 +1,20 @@
 import { auth } from "@/auth";
 import { NextRequest, NextResponse } from "next/server";
 
-const protectedRoutes = ["/protected"];
+const protectedPaths = ["/dashboard"];  // Prefixes für Gruppen
 
 export default async function middleware(req: NextRequest) {
   const session = await auth();
   const pathname = req.nextUrl.pathname;
 
-  if (protectedRoutes.includes(pathname) && !session) {
-    return NextResponse.redirect(new URL("/", req.url));
+  // Prüfe Prefix für alle Subrouten
+  const isProtected = protectedPaths.some(path => pathname.startsWith(path));
+
+  if (isProtected && !session) {
+    return NextResponse.redirect(new URL("/auth/signin", req.url));
   }
 }
 
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
+  matcher: ["/dashboard/:path*", "/((?!api|_next/static|_next/image|favicon.ico).*)"]
 };
