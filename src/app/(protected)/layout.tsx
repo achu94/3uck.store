@@ -1,14 +1,26 @@
-"use client";
+import { auth } from "@/auth";
 
-import { useSession } from "next-auth/react";
+export const metadata = {
+    title: "Dashboard",
+    description: "NextJs 15 App Router and NextAuth",
+};
 
-export default function ProtectedLayout({
+export default async function ProtectedLayout({
     children,
 }: {
     children: React.ReactNode;
 }) {
-    const { data: session, status } = useSession();
-    console.log(session);
+    const session = await auth();
+
+    const getFirstChar = (value?: string) => {
+        if (!value) return "?";
+        const trimmed = value.trim();
+        if (!trimmed) return "?";
+        return Array.from(trimmed)[0].toUpperCase();
+    };
+
+    const names = session?.user?.name?.split(" ");
+
     return (
         <div className="drawer">
             <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
@@ -43,11 +55,14 @@ export default function ProtectedLayout({
                             <div className="avatar">
                                 {session?.user?.image ? (
                                     <div className="w-6 rounded">
-                                        <img src={session?.user?.image ?? ""} />
+                                        <img src={session?.user?.image} />
                                     </div>
                                 ) : (
-                                    <div className="bg-neutral text-neutral-content w-24 rounded-full">
-                                        <span className="text-3xl">D</span>
+                                    <div className="bg-neutral text-neutral-content w-6 rounded-full">
+                                        <span className="text-md">
+                                            {getFirstChar(names?.[0])}
+                                            {getFirstChar(names?.[1])}
+                                        </span>
                                     </div>
                                 )}
                             </div>
