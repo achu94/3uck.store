@@ -1,7 +1,6 @@
 import Script from "next/script";
 
 import "@/app/globals.css";
-
 import Provider from "@/components/Provider";
 
 export const metadata = {
@@ -15,12 +14,15 @@ export default function RootLayout({
     children: React.ReactNode;
 }) {
     return (
-        <html lang="en" data-theme="cupcake">
-            <Script
-                defer
-                src="https://cloud.umami.is/script.js"
-                data-website-id="..."
-            />
+        <html lang="de" data-theme="cupcake">
+            <head>
+                <Script
+                    defer
+                    src="https://cloud.umami.is/script.js"
+                    data-website-id="202af267-80fb-49a0-96fb-669616512829"
+                    strategy="afterInteractive"
+                />
+            </head>
             <body>
                 <Provider>{children}</Provider>
             </body>
