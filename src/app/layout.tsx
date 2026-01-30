@@ -1,3 +1,5 @@
+import Script from "next/script";
+
 import "@/app/globals.css";
 
 import Provider from "@/components/Provider";
@@ -14,6 +16,11 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en" data-theme="cupcake">
+            <Script
+                defer
+                src="https://cloud.umami.is/script.js"
+                data-website-id="..."
+            />
             <body>
                 <Provider>{children}</Provider>
             </body>
