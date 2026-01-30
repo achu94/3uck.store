@@ -1,25 +1,22 @@
 import "@/app/globals.css";
 
-import { Inter } from "next/font/google";
 import Provider from "@/components/Provider";
 
-const inter = Inter({ subsets: ["latin"] });
-
 export const metadata = {
-  title: "NextJs 15 App Router and NextAuth",
-  description: "NextJs 15 App Router and NextAuth",
+    title: "3uck.store — Bald verfügbar",
+    description: "Wir arbeiten gerade an 3uck.store. Schau bald wieder vorbei!",
 };
 
 export default function RootLayout({
-  children,
+    children,
 }: {
-  children: React.ReactNode;
+    children: React.ReactNode;
 }) {
-  return (
-    <html lang="en" data-theme="cupcake">
-      <body className={inter.className}>
-        <Provider>{children}</Provider>
-      </body>
-    </html>
-  );
+    return (
+        <html lang="en" data-theme="cupcake">
+            <body>
+                <Provider>{children}</Provider>
+            </body>
+        </html>
+    );
 }
