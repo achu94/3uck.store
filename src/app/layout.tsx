@@ -6,20 +6,20 @@ import Provider from "@/components/Provider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "NextJs 15 App Router and NextAuth",
-  description: "NextJs 15 App Router and NextAuth",
+    title: "NextJs 15 App Router and NextAuth",
+    description: "NextJs 15 App Router and NextAuth",
 };
 
 export default function RootLayout({
-  children,
+    children,
 }: {
-  children: React.ReactNode;
+    children: React.ReactNode;
 }) {
-  return (
-    <html lang="en" data-theme="cupcake">
-      <body className={inter.className}>
-        <Provider>{children}</Provider>
-      </body>
-    </html>
-  );
+    return (
+        <html lang="en">
+            <body className={inter.className}>
+                <Provider>{children}</Provider>
+            </body>
+        </html>
+    );
 }
