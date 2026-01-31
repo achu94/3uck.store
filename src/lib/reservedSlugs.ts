@@ -12,6 +12,7 @@ export const RESERVED_SLUGS = [
     "auth",
     "login",
     "logout",
+    "signout",
     "signin",
     "sign-in",
     "signup",
