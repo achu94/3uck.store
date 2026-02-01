@@ -6,6 +6,8 @@ import { storeTypeAtom } from "@/atoms/store";
 import { Card3DModelStore } from "./Card3DModelStore";
 import { Card3DPrintStore } from "./Card3DPrintStore";
 import { StoreForm } from "./StoreForm";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { User } from "lucide-react";
 
 export function NewStore() {
     const storeTyp = useAtomValue(storeTypeAtom);
@@ -28,9 +30,19 @@ export function NewStore() {
         );
     }
 
+    // return <StoreForm storeTyp={storeTyp} />;
+
     return (
-        <div className="p-2">
-            <StoreForm storeTyp={storeTyp} />
+        <div className="">
+            <h1>AHCUACHUACHUAHCUHC</h1>
+            <div className="flex justity-right">
+                <Avatar className="h-12 w-12">
+                    <AvatarImage src="" alt="Profilbild" />
+                    <AvatarFallback className="bg-muted text-muted-foreground">
+                        <User className="h-5 w-5" />
+                    </AvatarFallback>
+                </Avatar>
+            </div>
         </div>
     );
 }

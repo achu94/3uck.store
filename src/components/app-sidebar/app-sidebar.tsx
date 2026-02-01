@@ -10,6 +10,7 @@ import {
     SidebarMenu,
     SidebarMenuButton,
     SidebarMenuItem,
+    SidebarRail,
 } from "@/components/ui/sidebar";
 
 import { LayoutDashboard, StoreIcon } from "lucide-react";
@@ -35,20 +36,20 @@ export function AppSidebar() {
     );
 
     return (
-        <Sidebar variant="inset" collapsible="icon" className="block">
+        <Sidebar collapsible="icon" variant="inset">
             <SidebarHeader>
-                <SidebarGroup>
-                    <SidebarContent>
-                        <SidebarMenu>
-                            {GenerateSidebarMenuItem(
-                                "Store Manager",
-                                "Go to store",
-                                StoreIcon,
-                                "/store/create",
-                            )}
-                        </SidebarMenu>
-                    </SidebarContent>
-                </SidebarGroup>
+                {/* <SidebarGroup> */}
+                <SidebarContent>
+                    <SidebarMenu>
+                        {GenerateSidebarMenuItem(
+                            "Store Manager",
+                            "Go to store",
+                            StoreIcon,
+                            "/store/create",
+                        )}
+                    </SidebarMenu>
+                </SidebarContent>
+                {/* </SidebarGroup> */}
             </SidebarHeader>
             <SidebarContent>
                 <SidebarGroup>
@@ -62,9 +63,10 @@ export function AppSidebar() {
                     </SidebarMenu>
                 </SidebarGroup>
             </SidebarContent>
-            <SidebarFooter className="flex items-center justify-center  p-2">
+            <SidebarFooter>
                 <SidebarUser />
             </SidebarFooter>
+            <SidebarRail />
         </Sidebar>
     );
 }
