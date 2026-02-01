@@ -1,4 +1,5 @@
-import Link from "next/link";
+import { useSetAtom } from "jotai";
+import { storeTypeAtom } from "@/atoms/store";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -10,8 +11,9 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 
-
 export function Card3DModelStore() {
+    const setStoreType = useSetAtom(storeTypeAtom);
+
     return (
         <Card className="mx-auto w-full max-w-sm">
             <CardHeader>
@@ -29,11 +31,14 @@ export function Card3DModelStore() {
             </CardContent>
 
             <CardFooter>
-                <Link href="/store/create?type=model" className="mx-auto">
-                    <Button variant="outline" size="sm" className="w-full">
-                        Open Model Store
-                    </Button>
-                </Link>
+                <Button
+                    onClick={() => setStoreType("model")}
+                    variant="outline"
+                    size="sm"
+                    className="w-full"
+                >
+                    Open Print Store
+                </Button>
             </CardFooter>
         </Card>
     );

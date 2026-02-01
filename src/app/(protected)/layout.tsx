@@ -13,8 +13,8 @@ export default async function ProtectedLayout({
 }) {
     return (
         <SidebarProvider>
-            <AppSidebar />
             <main>
+                <AppSidebar />
                 <SidebarTrigger />
                 {children}
             </main>

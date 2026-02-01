@@ -1,4 +1,9 @@
+"use client";
+
 import Link from "next/link";
+
+import { useSetAtom } from "jotai";
+import { storeTypeAtom } from "@/atoms/store";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -11,6 +16,8 @@ import {
 } from "@/components/ui/card";
 
 export function Card3DPrintStore() {
+    const setStoreType = useSetAtom(storeTypeAtom);
+
     return (
         <Card className="mx-auto w-full max-w-sm">
             <CardHeader>
@@ -28,11 +35,14 @@ export function Card3DPrintStore() {
             </CardContent>
 
             <CardFooter>
-                <Link href="/store/create?type=print" className="mx-auto">
-                    <Button variant="outline" size="sm" className="w-full">
-                        Open Print Store
-                    </Button>
-                </Link>
+                <Button
+                    onClick={() => setStoreType("print")}
+                    variant="outline"
+                    size="sm"
+                    className="w-full"
+                >
+                    Open Print Store
+                </Button>
             </CardFooter>
         </Card>
     );

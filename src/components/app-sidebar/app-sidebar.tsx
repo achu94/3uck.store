@@ -35,7 +35,7 @@ export function AppSidebar() {
     );
 
     return (
-        <Sidebar>
+        <Sidebar variant="inset" collapsible="icon" className="block">
             <SidebarHeader>
                 <SidebarGroup>
                     <SidebarContent>
