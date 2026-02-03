@@ -61,7 +61,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         },
 
         async redirect({ baseUrl }) {
-            return `${baseUrl}/store`;
+            return `${baseUrl}`;
         },
     },
 });
