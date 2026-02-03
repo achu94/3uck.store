@@ -1,21 +1,20 @@
 "use server";
 
 import { supabaseServer } from "@/lib/supabaseServer";
+import { updateStoreSchema } from "@/schemas/store.schema";
 import { revalidatePath } from "next/cache";
-import { StoreCreateInput } from "@/types/db";
 
-export async function saveStoreSettings(formData: FormData) {
+export async function updateStore(formData: FormData) {
     const supabase = supabaseServer();
 
-    const data = Object.fromEntries(formData);
+    const { storeId, ...updateData } = updateStoreSchema.parse(
+        Object.fromEntries(formData),
+    );
 
     const { error } = await supabase
         .from("stores")
-        .update({
-            name: data.name,
-            currency: data.currency,
-        })
-        .eq("id", data.storeId);
+        .update(updateData)
+        .eq("id", storeId);
 
     if (error) throw error;
 

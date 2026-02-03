@@ -1,12 +1,13 @@
 "use client";
 
+import { createStore } from "@/actions/store/create-store";
+
 import { useAtomValue } from "jotai";
 import { storeTypeAtom } from "@/atoms/store";
 
 import { Card3DModelStore } from "./Card3DModelStore";
 import { Card3DPrintStore } from "./Card3DPrintStore";
 
-import { LucideImagePlay } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 import { InputWithBadge } from "@/components/ui/ShopUrlInput";
 import { ImageUploadPreview } from "@/components/ui/ImageUploadPreview";
@@ -18,9 +19,12 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { userIdAtom } from "@/atoms/auth";
+import { Button } from "@/components/ui/button";
 
 export function NewStore() {
     const storeTyp = useAtomValue(storeTypeAtom);
+    const userId = useAtomValue(userIdAtom);
 
     if (storeTyp === null) {
         return (
@@ -41,7 +45,7 @@ export function NewStore() {
     }
 
     return (
-        <div className="flex flex-col gap-6">
+        <form action={createStore} className="flex flex-col gap-6">
             <p className="text-sm leading-relaxed">
                 Grundinformationen und Darstellung deines Shops
             </p>
@@ -71,9 +75,22 @@ export function NewStore() {
                         </CardHeader>
                         <CardContent>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <Input placeholder="Shop Kontakt Email" />
-                                <Input placeholder="Shop Name" />
-                                <InputWithBadge badget="https://3uck.shop/" />
+                                <Input
+                                    placeholder="Shop Kontakt Email"
+                                    name="contact_email"
+                                    type="email"
+                                    required
+                                />
+                                <Input
+                                    placeholder="Shop Name"
+                                    name="name"
+                                    required
+                                />
+                                <InputWithBadge
+                                    badge="https://3uck.shop/"
+                                    name="slug"
+                                    required
+                                />
                             </div>
                         </CardContent>
                     </Card>
@@ -91,6 +108,7 @@ export function NewStore() {
                         <Textarea
                             id="textarea-message"
                             placeholder="Beschreiben Sie Ihren Shop..."
+                            name="description"
                         />
                     </CardContent>
                 </Card>
@@ -105,15 +123,24 @@ export function NewStore() {
                     </CardHeader>
                     <CardContent>
                         <div className="flex flex-col gap-5 text-center items-center ">
-                            <InputWithBadge badget="Youtube/" />
-                            <InputWithBadge badget="Tiktok/" />
-                            <InputWithBadge badget="Instagram/" />
-                            <InputWithBadge badget="Facebook/" />
-                            <InputWithBadge badget="Twitter/" />
+                            <InputWithBadge badge="Youtube/" name="youtube" />
+                            <InputWithBadge badge="Tiktok/" name="tiktok" />
+                            <InputWithBadge
+                                badge="Instagram/"
+                                name="instagram"
+                            />
+                            <InputWithBadge badge="Facebook/" name="facebook" />
+                            <InputWithBadge badge="Twitter/" name="twitter" />
                         </div>
                     </CardContent>
                 </Card>
             </div>
-        </div>
+            <input type="hidden" name="type" value={storeTyp} />
+            <input type="hidden" name="user_id" value={userId!} />
+
+            <Button type="submit" className="btn btn-primary self-end">
+                Store erstellen
+            </Button>
+        </form>
     );
 }

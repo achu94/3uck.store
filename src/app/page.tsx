@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { redirect } from "next/navigation";
 
-import { auth } from "@/auth";
+import { auth } from "@/lib/auth";
 import Auth0Button from "@/components/buttons/Auth0";
 import DiscordButton from "@/components/buttons/DiscordButton";
 import GoogleButton from "@/components/buttons/GoogleButton";

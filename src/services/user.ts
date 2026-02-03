@@ -1,4 +1,4 @@
-import type { UserInsert } from "@/types/public.users";
+import type { UserInsert } from "@/types/db";
 import { supabase } from "@/lib/supabaseClient";
 
 export async function createUser(user: UserInsert) {

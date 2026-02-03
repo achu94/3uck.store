@@ -1,15 +1,15 @@
-import { auth } from "@/auth";
+import { auth } from "@/lib/auth";
 
 export async function GET() {
-  const session = await auth();
+    const session = await auth();
 
-  if (!session) {
-    return new Response("Unauthorized", {
-      status: 401,
+    if (!session) {
+        return new Response("Unauthorized", {
+            status: 401,
+        });
+    }
+
+    return new Response("Hello, Next.js!", {
+        status: 200,
     });
-  }
-
-  return new Response("Hello, Next.js!", {
-    status: 200,
-  });
 }
