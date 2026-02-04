@@ -45,7 +45,7 @@ export function AppSidebar() {
                             "Store Manager",
                             "Go to store",
                             StoreIcon,
-                            "/store/create",
+                            "/store",
                         )}
                     </SidebarMenu>
                 </SidebarContent>
@@ -58,7 +58,7 @@ export function AppSidebar() {
                             "Dashboard",
                             "Go to dashboard",
                             LayoutDashboard,
-                            "/store",
+                            "/dashboard",
                         )}
                     </SidebarMenu>
                 </SidebarGroup>
