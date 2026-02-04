@@ -21,6 +21,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { userIdAtom } from "@/atoms/auth";
 import { Button } from "@/components/ui/button";
+import { Store } from "lucide-react";
 
 export function NewStore() {
     const storeTyp = useAtomValue(storeTypeAtom);
@@ -31,9 +32,16 @@ export function NewStore() {
             <div className="hero min-h-screen bg-base-200 flex flex-col items-center justify-start">
                 <div className="hero-content text-center">
                     <div className="max-w-md">
-                        <h1 className="text-5xl font-bold">
-                            Willkommen im Store Manger!
-                        </h1>
+                        <div className="flex flex-col items-center text-center gap-2">
+                            <Store className="h-8 w-8 text-muted-foreground" />
+                            <h1 className="text-xl font-bold">
+                                Noch kein Store vorhanden
+                            </h1>
+                            <p className="text-sm text-muted-foreground max-w-md">
+                                Wähle unten einen Store-Typ aus und erstelle
+                                deinen eigenen Shop.
+                            </p>
+                        </div>
                         <div className="flex flex-wrap gap-4 mt-8 justify-center">
                             <Card3DPrintStore />
                             <Card3DModelStore />
