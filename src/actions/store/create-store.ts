@@ -91,7 +91,7 @@ export async function createStore(
         })
         .select()
         .single();
-    
+
     if (error) {
         return {
             errors: {
@@ -101,8 +101,8 @@ export async function createStore(
         };
     }
 
-    revalidatePath("/dashboard");
-    redirect(`/store/${store.slug}`);
+    revalidatePath("/store");
+    redirect(`/store`);
 }
 
 const getValues = (formData: FormData) => ({

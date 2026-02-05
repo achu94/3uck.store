@@ -6,7 +6,7 @@ import { redirect, notFound } from "next/navigation";
 
 import type { Store } from "@/types/db";
 
-export async function getStore(): Promise<Store> {
+export async function getStore(): Promise<Store | null> {
     const session = await auth();
 
     const userId = session?.user?.id;
@@ -23,7 +23,7 @@ export async function getStore(): Promise<Store> {
         .single();
 
     if (error || !store) {
-        notFound();
+        return null;
     }
 
     return store;

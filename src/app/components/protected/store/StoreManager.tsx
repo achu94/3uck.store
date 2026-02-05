@@ -19,7 +19,7 @@ import {
 } from "lucide-react";
 
 type StoreManagerProps = {
-    store: Store;
+    store: Store | null;
 };
 
 type ItemPlaceholder = {
