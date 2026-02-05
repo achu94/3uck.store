@@ -41,6 +41,8 @@ type CategoryPlaceholder = {
 export function StoreManager({ store }: StoreManagerProps) {
     if (!store) redirect("/store/create");
 
+    const STORE_ASSET_URL = process.env.NEXT_PUBLIC_STORE_ASSET_URL;
+
     const storeInitial = (store.name?.[0] ?? "S").toUpperCase();
 
     // ✅ Platzhalter-Daten (später ersetzen durch echte DB Daten)
@@ -109,7 +111,7 @@ export function StoreManager({ store }: StoreManagerProps) {
                                 <div className="w-28 h-28 rounded-2xl border bg-background flex items-center justify-center overflow-hidden">
                                     {store.logo_url ? (
                                         <img
-                                            src={store.logo_url}
+                                            src={`${STORE_ASSET_URL}/${store.logo_url}`}
                                             alt={`${store.name} Logo`}
                                             className="w-full h-full object-cover"
                                         />

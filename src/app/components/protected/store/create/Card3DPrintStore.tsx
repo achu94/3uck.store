@@ -1,7 +1,5 @@
 "use client";
 
-import Link from "next/link";
-
 import { useSetAtom } from "jotai";
 import { storeTypeAtom } from "@/atoms/store";
 
@@ -21,16 +19,18 @@ export function Card3DPrintStore() {
     return (
         <Card className="mx-auto w-full max-w-sm">
             <CardHeader>
-                <CardTitle>3D Print Service</CardTitle>
+                <CardTitle>3D-Druck-Service</CardTitle>
                 <CardDescription>
-                    Manage print jobs, materials and production queue.
+                    Verwalte Druckaufträge, Materialien und deine
+                    Produktionswarteschlange.
                 </CardDescription>
             </CardHeader>
 
             <CardContent>
                 <p>
-                    Track incoming orders, set print priorities and monitor your
-                    active printer workload.
+                    Behalte eingehende Bestellungen im Blick, setze
+                    Druckprioritäten und überwache die Auslastung deiner aktiven
+                    Drucker.
                 </p>
             </CardContent>
 
@@ -41,7 +41,7 @@ export function Card3DPrintStore() {
                     size="sm"
                     className="w-full"
                 >
-                    Open Print Store
+                    Print-Store eröffnen
                 </Button>
             </CardFooter>
         </Card>

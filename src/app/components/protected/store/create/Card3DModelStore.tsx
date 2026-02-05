@@ -17,16 +17,16 @@ export function Card3DModelStore() {
     return (
         <Card className="mx-auto w-full max-w-sm">
             <CardHeader>
-                <CardTitle>3D Model Store</CardTitle>
+                <CardTitle>3D-Modell-Store</CardTitle>
                 <CardDescription>
-                    Sell digital models, licenses and downloads.
+                    Verkaufe digitale 3D-Modelle, Lizenzen und Downloads.
                 </CardDescription>
             </CardHeader>
 
             <CardContent>
                 <p>
-                    Upload new assets, manage pricing, and track downloads &
-                    revenue from your marketplace.
+                    Lade neue Modelle hoch, verwalte Preise und behalte
+                    Downloads sowie deine Einnahmen im Blick.
                 </p>
             </CardContent>
 
@@ -37,7 +37,7 @@ export function Card3DModelStore() {
                     size="sm"
                     className="w-full"
                 >
-                    Open Print Store
+                    Modell-Store eröffnen
                 </Button>
             </CardFooter>
         </Card>
