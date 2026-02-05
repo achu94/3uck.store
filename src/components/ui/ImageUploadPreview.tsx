@@ -3,22 +3,39 @@
 import { useRef, useState } from "react";
 import { LucideImagePlus, X } from "lucide-react";
 import clsx from "clsx";
+import { toast } from "sonner";
 
 type Props = {
+    name: string;
     label?: string;
     aspect?: "square" | "banner";
 };
 
 export function ImageUploadPreview({
+    name,
     label = "Bild auswählen",
     aspect = "square",
 }: Props) {
     const inputRef = useRef<HTMLInputElement | null>(null);
     const [preview, setPreview] = useState<string | null>(null);
 
+    const MAX_SIZE = 10 * 1024 * 1024; // 10 MB
+
     function onFileChange(e: React.ChangeEvent<HTMLInputElement>) {
         const file = e.target.files?.[0];
         if (!file) return;
+
+        if (file.size > MAX_SIZE) {
+            toast.error("Bild zu groß", {
+                description: "Das Bild darf maximal 10 MB groß sein.",
+                position: "top-center",
+            });
+
+            // Input zurücksetzen
+            e.target.value = "";
+            setPreview(null);
+            return;
+        }
 
         const url = URL.createObjectURL(file);
         setPreview(url);
@@ -37,6 +54,7 @@ export function ImageUploadPreview({
                 accept="image/*"
                 hidden
                 onChange={onFileChange}
+                name={name}
             />
 
             <div
