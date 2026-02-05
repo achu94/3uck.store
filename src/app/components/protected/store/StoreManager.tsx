@@ -18,6 +18,8 @@ import {
     Sparkles,
 } from "lucide-react";
 
+import { getAssetsUrl } from "@/lib/utils";
+
 type StoreManagerProps = {
     store: Store | null;
 };
@@ -40,8 +42,8 @@ type CategoryPlaceholder = {
 
 export function StoreManager({ store }: StoreManagerProps) {
     if (!store) redirect("/store/create");
-
-    const STORE_ASSET_URL = process.env.NEXT_PUBLIC_STORE_ASSET_URL;
+    
+    const storeAssetUrl = getAssetsUrl("STORE");
 
     const storeInitial = (store.name?.[0] ?? "S").toUpperCase();
 
@@ -111,7 +113,7 @@ export function StoreManager({ store }: StoreManagerProps) {
                                 <div className="w-28 h-28 rounded-2xl border bg-background flex items-center justify-center overflow-hidden">
                                     {store.logo_url ? (
                                         <img
-                                            src={`${STORE_ASSET_URL}/${store.logo_url}`}
+                                            src={`${storeAssetUrl}/${store.logo_url}`}
                                             alt={`${store.name} Logo`}
                                             className="w-full h-full object-cover"
                                         />
