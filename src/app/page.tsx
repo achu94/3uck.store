@@ -1,6 +1,5 @@
 import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
-import { Button } from "@/components/ui/button";
 import GoogleButton from "@/components/buttons/GoogleButton";
 
 export default async function Home() {
