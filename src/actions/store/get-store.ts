@@ -2,7 +2,7 @@
 
 import { supabaseServer } from "@/lib/supabaseServer";
 import { auth } from "@/lib/auth";
-import { redirect, notFound } from "next/navigation";
+import { redirect } from "next/navigation";
 
 import type { Store } from "@/types/db";
 
@@ -11,7 +11,7 @@ export async function getStore(): Promise<Store | null> {
 
     const userId = session?.user?.id;
     if (!userId) {
-        redirect("/login");
+        redirect("/auth/signin");
     }
 
     const supabase = supabaseServer();
