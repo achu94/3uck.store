@@ -1,71 +1,74 @@
-// "use server";
+"use server";
 
-// import { supabaseServer } from "@/lib/supabaseServer";
-// import { auth } from "@/lib/auth";
-// import { redirect } from "next/navigation";
+import { supabaseServer } from "@/lib/supabaseServer";
+import { auth } from "@/lib/auth";
+import { redirect } from "next/navigation";
 
-// import type { Category } from "@/types/db";
+import type { Database } from "@/types/supabase";
 
-// export async function getCategories(
-//     storeId: number,
-//     categoryId?: number,
-// ): Promise<GetCategoriesResult> {
-//     const session = await auth();
-//     const userId = session?.user?.id;
+export type Category = Database["public"]["Tables"]["categories"]["Row"];
+export type GetCategoriesResult =
+    | Omit<Category, "updated_at" | "store_id">[]
+    | null;
 
-//     if (!userId) {
-//         redirect("/auth/signin");
-//     }
+export async function getCategories(
+    categoryId?: number,
+): Promise<GetCategoriesResult> {
+    const session = await auth();
+    const userId = session?.user?.id;
 
-//     const supabase = supabaseServer();
+    if (!userId) {
+        redirect("/auth/signin");
+    }
 
-//     // 🔒 Ownership prüfen (einmal, immer)
-//     const { data: store } = await supabase
-//         .from("stores")
-//         .select("id")
-//         .eq("id", storeId)
-//         .eq("user_id", userId)
-//         .single();
+    const supabase = supabaseServer();
 
-//     if (!store) {
-//         return null;
-//     }
+    // 🔒 Ownership prüfen (einmal, immer)
+    const { data: store } = await supabase
+        .from("stores")
+        .select("id")
+        .eq("user_id", userId)
+        .single();
 
-//     // 🧠 Basis-Query
-//     let query = supabase
-//         .from("categories")
-//         .select(
-//             `
-//             id,
-//             name,
-//             slug,
-//             description,
-//             is_active,
-//             sort_order,
-//             created_at
-//         `,
-//         )
-//         .eq("store_id", storeId);
+    if (!store) {
+        return null;
+    }
 
-//     // 👉 Eine Kategorie
-//     if (categoryId) {
-//         const { data, error } = await query.eq("id", categoryId).single();
+    // 🧠 Basis-Query
+    let query = supabase
+        .from("categories")
+        .select(
+            `
+            id,
+            name,
+            slug,
+            description,
+            is_active,
+            sort_order,
+            created_at
+        `,
+        )
+        .eq("store_id", store.id);
 
-//         if (error || !data) {
-//             return null;
-//         }
+    // 👉 Eine Kategorie
+    if (categoryId) {
+        const { data, error } = await query.eq("id", categoryId).single();
 
-//         return data;
-//     }
+        if (error || !data) {
+            return null;
+        }
 
-//     // 👉 Alle Kategorien
-//     const { data, error } = await query.order("sort_order", {
-//         ascending: true,
-//     });
+        return [data];
+    }
 
-//     if (error || !data) {
-//         return [];
-//     }
+    // 👉 Alle Kategorien
+    const { data, error } = await query.order("sort_order", {
+        ascending: true,
+    });
 
-//     return data;
-// }
+    if (error || !data) {
+        return [];
+    }
+
+    return data;
+}

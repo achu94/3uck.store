@@ -13,7 +13,13 @@ import {
     SidebarRail,
 } from "@/components/ui/sidebar";
 
-import { LayoutDashboard, StoreIcon } from "lucide-react";
+import {
+    LayoutDashboard,
+    StoreIcon,
+    FolderTree,
+    Package,
+    Home,
+} from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
 import { SidebarUser } from "./SidebarUser";
@@ -55,10 +61,26 @@ export function AppSidebar() {
                 <SidebarGroup>
                     <SidebarMenu>
                         {GenerateSidebarMenuItem(
-                            "Dashboard",
+                            "Start",
                             "Go to dashboard",
                             LayoutDashboard,
                             "/dashboard",
+                        )}
+                    </SidebarMenu>
+                    <SidebarMenu>
+                        {GenerateSidebarMenuItem(
+                            "Kategorien",
+                            "Go to categories",
+                            FolderTree,
+                            "/dashboard/categories",
+                        )}
+                    </SidebarMenu>
+                    <SidebarMenu>
+                        {GenerateSidebarMenuItem(
+                            "Artikels",
+                            "Go to items",
+                            Package,
+                            "/dashboard/item",
                         )}
                     </SidebarMenu>
                 </SidebarGroup>
