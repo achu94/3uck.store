@@ -14,6 +14,50 @@ export type Database = {
   }
   public: {
     Tables: {
+      categories: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: number
+          is_active: boolean
+          name: string
+          slug: string
+          sort_order: number
+          store_id: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: number
+          is_active?: boolean
+          name: string
+          slug: string
+          sort_order?: number
+          store_id: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: number
+          is_active?: boolean
+          name?: string
+          slug?: string
+          sort_order?: number
+          store_id?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "categories_store_id_fkey"
+            columns: ["store_id"]
+            isOneToOne: false
+            referencedRelation: "stores"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       stores: {
         Row: {
           contact_email: string | null
@@ -69,6 +113,7 @@ export type Database = {
       }
       users: {
         Row: {
+          banner: string | null
           created_at: string | null
           email: string
           id: string
@@ -80,6 +125,7 @@ export type Database = {
           updated_at: string | null
         }
         Insert: {
+          banner?: string | null
           created_at?: string | null
           email: string
           id?: string
@@ -91,6 +137,7 @@ export type Database = {
           updated_at?: string | null
         }
         Update: {
+          banner?: string | null
           created_at?: string | null
           email?: string
           id?: string
