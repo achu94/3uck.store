@@ -20,8 +20,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-    title: "NextJs 15 App Router and NextAuth",
-    description: "NextJs 15 App Router and NextAuth",
+    title: "3uck.store",
+    description: "Dein Store für besondere Vorlieben und ausgewählte Inhalte.",
 };
 
 export default function RootLayout({
