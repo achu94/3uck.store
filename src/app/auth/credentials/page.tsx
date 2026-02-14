@@ -138,10 +138,10 @@ export default function CredentialsLogin() {
                             <FieldDescription className="text-center">
                                 Don't have an account?{" "}
                                 <Link
-                                    href="/auth/register"
+                                    href="/auth/signin"
                                     className="underline underline-offset-4"
                                 >
-                                    Sign up with credentials
+                                    Sign up
                                 </Link>
                             </FieldDescription>
                         </FieldGroup>
