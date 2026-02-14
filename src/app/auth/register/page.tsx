@@ -15,33 +15,41 @@ import {
     FieldSeparator,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { loginUser } from "@/actions/auth/login";
+import { registerUser } from "@/actions/auth/register";
 
-export default function CredentialsLogin() {
+export default function RegisterPage() {
     const router = useRouter();
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
+    const [name, setName] = React.useState("");
     const [loading, setLoading] = React.useState(false);
     const [error, setError] = React.useState("");
+    const [success, setSuccess] = React.useState(false);
 
-    async function handleCredentialsLogin(e: React.FormEvent) {
+    async function handleRegister(e: React.FormEvent) {
         e.preventDefault();
         
         try {
             setLoading(true);
             setError("");
+            setSuccess(false);
             
-            const result = await loginUser({ email, password });
+            const result = await registerUser({ email, password, name });
 
             if (!result.success) {
-                setError(result.error || "Login failed");
+                setError(result.error || "Registration failed");
                 return;
             }
 
-            router.push("/dashboard");
-            router.refresh();
+            setSuccess(true);
+            
+            // Auto login after successful registration
+            setTimeout(() => {
+                router.push("/auth/credentials");
+            }, 2000);
+            
         } catch (err) {
-            setError("Login failed");
+            setError("Registration failed");
         } finally {
             setLoading(false);
         }
@@ -51,14 +59,14 @@ export default function CredentialsLogin() {
         <div className="min-h-screen flex items-center justify-center p-6">
             <Card className="w-full max-w-md">
                 <CardContent className="p-6">
-                    <form onSubmit={handleCredentialsLogin}>
+                    <form onSubmit={handleRegister}>
                         <FieldGroup>
                             <div className="flex flex-col items-center gap-2 text-center mb-6">
                                 <h1 className="text-2xl font-bold">
-                                    Login
+                                    Create Account
                                 </h1>
                                 <p className="text-muted-foreground text-sm">
-                                    Enter your credentials
+                                    Sign up with credentials
                                 </p>
                             </div>
 
@@ -67,6 +75,25 @@ export default function CredentialsLogin() {
                                     {error}
                                 </div>
                             )}
+
+                            {success && (
+                                <div className="bg-green-500/15 text-green-600 text-sm p-3 rounded-md">
+                                    Account created successfully! Redirecting to login...
+                                </div>
+                            )}
+
+                            {/* NAME */}
+                            <Field>
+                                <FieldLabel htmlFor="name">Name</FieldLabel>
+                                <Input
+                                    id="name"
+                                    type="text"
+                                    placeholder="Your name"
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                    required
+                                />
+                            </Field>
 
                             {/* EMAIL */}
                             <Field>
@@ -92,16 +119,19 @@ export default function CredentialsLogin() {
                                     onChange={(e) => setPassword(e.target.value)}
                                     required
                                 />
+                                <FieldDescription>
+                                    Must be at least 6 characters long
+                                </FieldDescription>
                             </Field>
 
-                            {/* LOGIN BUTTON */}
+                            {/* REGISTER BUTTON */}
                             <Field>
                                 <Button
                                     type="submit"
                                     className="w-full"
-                                    disabled={loading}
+                                    disabled={loading || success}
                                 >
-                                    {loading ? "Signing in..." : "Sign In"}
+                                    {loading ? "Creating account..." : "Create Account"}
                                 </Button>
                             </Field>
 
@@ -130,18 +160,18 @@ export default function CredentialsLogin() {
                                             fill="currentColor"
                                         />
                                     </svg>
-                                    Continue with Google
+                                    Sign up with Google
                                 </Button>
                             </Field>
 
                             {/* Footer */}
                             <FieldDescription className="text-center">
-                                Don't have an account?{" "}
+                                Already have an account?{" "}
                                 <Link
-                                    href="/auth/register"
+                                    href="/auth/credentials"
                                     className="underline underline-offset-4"
                                 >
-                                    Sign up with credentials
+                                    Sign in
                                 </Link>
                             </FieldDescription>
                         </FieldGroup>

@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 
@@ -16,48 +15,27 @@ import {
     FieldSeparator,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { registerUser } from "@/actions/auth/register";
 
 export function SignupForm({
     className,
     ...props
 }: React.ComponentProps<"div">) {
-    const router = useRouter();
     const [email, setEmail] = React.useState("");
-    const [password, setPassword] = React.useState("");
-    const [name, setName] = React.useState("");
-    const [loading, setLoading] = React.useState(false);
+    const [loadingEmail, setLoadingEmail] = React.useState(false);
     const [loadingGoogle, setLoadingGoogle] = React.useState(false);
-    const [error, setError] = React.useState("");
-    const [success, setSuccess] = React.useState(false);
 
-    async function handleRegister(e: React.FormEvent) {
+    async function handleEmailSignIn(e: React.FormEvent) {
         e.preventDefault();
-        if (!email || !password || !name) return;
+        if (!email) return;
 
         try {
-            setLoading(true);
-            setError("");
-            setSuccess(false);
-            
-            const result = await registerUser({ email, password, name });
-
-            if (!result.success) {
-                setError(result.error || "Registration failed");
-                return;
-            }
-
-            setSuccess(true);
-            
-            // Auto redirect to login after successful registration
-            setTimeout(() => {
-                router.push("/auth/credentials");
-            }, 2000);
-            
-        } catch (err) {
-            setError("Registration failed");
+            setLoadingEmail(true);
+            await signIn("email", {
+                email,
+                callbackUrl: "/dashboard",
+            });
         } finally {
-            setLoading(false);
+            setLoadingEmail(false);
         }
     }
 
@@ -77,41 +55,17 @@ export function SignupForm({
             <Card className="overflow-hidden p-0">
                 <CardContent className="grid p-0 md:grid-cols-2">
                     {/* LEFT: FORM */}
-                    <form onSubmit={handleRegister} className="p-6 md:p-8">
+                    <form onSubmit={handleEmailSignIn} className="p-6 md:p-8">
                         <FieldGroup>
                             <div className="flex flex-col items-center gap-2 text-center">
                                 <h1 className="text-2xl font-bold">
                                     Create your account
                                 </h1>
                                 <p className="text-muted-foreground text-sm text-balance">
-                                    Enter your details to create your account
+                                    Enter your email below to create your
+                                    account
                                 </p>
                             </div>
-
-                            {error && (
-                                <div className="bg-destructive/15 text-destructive text-sm p-3 rounded-md">
-                                    {error}
-                                </div>
-                            )}
-
-                            {success && (
-                                <div className="bg-green-500/15 text-green-600 text-sm p-3 rounded-md">
-                                    Account created successfully! Redirecting to login...
-                                </div>
-                            )}
-
-                            {/* NAME */}
-                            <Field>
-                                <FieldLabel htmlFor="name">Name</FieldLabel>
-                                <Input
-                                    id="name"
-                                    type="text"
-                                    placeholder="Your name"
-                                    value={name}
-                                    onChange={(e) => setName(e.target.value)}
-                                    required
-                                />
-                            </Field>
 
                             {/* EMAIL */}
                             <Field>
@@ -119,37 +73,27 @@ export function SignupForm({
                                 <Input
                                     id="email"
                                     type="email"
-                                    placeholder="you@example.com"
+                                    placeholder="you@3uck.store"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                     required
                                 />
-                            </Field>
-
-                            {/* PASSWORD */}
-                            <Field>
-                                <FieldLabel htmlFor="password">Password</FieldLabel>
-                                <Input
-                                    id="password"
-                                    type="password"
-                                    placeholder="Your password"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    required
-                                />
                                 <FieldDescription>
-                                    Must be at least 6 characters long
+                                    We&apos;ll send you a secure login link (no
+                                    password needed).
                                 </FieldDescription>
                             </Field>
 
-                            {/* REGISTER BUTTON */}
+                            {/* EMAIL BUTTON */}
                             <Field>
                                 <Button
                                     type="submit"
                                     className="w-full"
-                                    disabled={loading || success}
+                                    disabled={loadingEmail}
                                 >
-                                    {loading ? "Creating account..." : "Create Account"}
+                                    {loadingEmail
+                                        ? "Sending link..."
+                                        : "Continue with Email"}
                                 </Button>
                             </Field>
 
@@ -188,7 +132,7 @@ export function SignupForm({
                             <FieldDescription className="text-center">
                                 Already have an account?{" "}
                                 <Link
-                                    href="/auth/credentials"
+                                    href="/signin"
                                     className="underline underline-offset-4"
                                 >
                                     Sign in
