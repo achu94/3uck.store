@@ -6,7 +6,8 @@
         "dev": "next dev --turbopack",
         "build": "next build",
         "start": "next start",
-        "lint": "next lint"
+        "check:type": "tsc --noEmit",
+        "check:lint": "next lint"
     },
     "dependencies": {
         "@auth/core": "^0.40.0",
