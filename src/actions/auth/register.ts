@@ -16,7 +16,7 @@ export async function registerUser(userData: RegisterInput) {
         if (existingUser) {
             return {
                 success: false,
-                error: "User with this email already exists",
+                error: "Benutzer mit dieser E-Mail existiert bereits",
             };
         }
 
@@ -46,7 +46,7 @@ export async function registerUser(userData: RegisterInput) {
         
         return {
             success: false,
-            error: "Registration failed",
+            error: "Registrierung fehlgeschlagen",
         };
     }
 }

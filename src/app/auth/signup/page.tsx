@@ -47,7 +47,7 @@ export default function RegisterPage() {
             
             // Auto login after successful registration
             setTimeout(() => {
-                router.push("/auth/credentials");
+                router.push("/dashboard");
             }, 2000);
             
         } catch (err) {
@@ -76,10 +76,10 @@ export default function RegisterPage() {
                         <FieldGroup>
                             <div className="flex flex-col items-center gap-2 text-center mb-6">
                                 <h1 className="text-2xl font-bold">
-                                    Create Account
+                                    Konto erstellen
                                 </h1>
                                 <p className="text-muted-foreground text-sm">
-                                    Create your account with credentials or Google
+                                    Mit Credentials oder Google registrieren
                                 </p>
                             </div>
 
@@ -91,7 +91,7 @@ export default function RegisterPage() {
 
                             {success && (
                                 <div className="bg-green-500/15 text-green-600 text-sm p-3 rounded-md">
-                                    Account created successfully! Redirecting to login...
+                                    Konto erfolgreich erstellt! Weiterleitung zum Dashboard...
                                 </div>
                             )}
 
@@ -101,7 +101,7 @@ export default function RegisterPage() {
                                 <Input
                                     id="name"
                                     type="text"
-                                    placeholder="Your name"
+                                    placeholder="Dein Name"
                                     value={name}
                                     onChange={(e) => setName(e.target.value)}
                                     required
@@ -110,11 +110,11 @@ export default function RegisterPage() {
 
                             {/* EMAIL */}
                             <Field>
-                                <FieldLabel htmlFor="email">Email</FieldLabel>
+                                <FieldLabel htmlFor="email">E-Mail</FieldLabel>
                                 <Input
                                     id="email"
                                     type="email"
-                                    placeholder="you@example.com"
+                                    placeholder="du@beispiel.de"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                     required
@@ -123,17 +123,17 @@ export default function RegisterPage() {
 
                             {/* PASSWORD */}
                             <Field>
-                                <FieldLabel htmlFor="password">Password</FieldLabel>
+                                <FieldLabel htmlFor="password">Passwort</FieldLabel>
                                 <Input
                                     id="password"
                                     type="password"
-                                    placeholder="Your password"
+                                    placeholder="Dein Passwort"
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                     required
                                 />
                                 <FieldDescription>
-                                    Must be at least 6 characters long
+                                    Muss mindestens 6 Zeichen lang sein
                                 </FieldDescription>
                             </Field>
 
@@ -144,13 +144,13 @@ export default function RegisterPage() {
                                     className="w-full"
                                     disabled={loading || success}
                                 >
-                                    {loading ? "Creating account..." : "Create Account"}
+                                    {loading ? "Erstelle Konto..." : "Konto erstellen"}
                                 </Button>
                             </Field>
 
                             {/* Separator */}
                             <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card">
-                                Or continue with
+                                Oder weiter mit
                             </FieldSeparator>
 
                             {/* GOOGLE BUTTON */}
@@ -172,18 +172,18 @@ export default function RegisterPage() {
                                             fill="currentColor"
                                         />
                                     </svg>
-                                    {loadingGoogle ? "Opening Google..." : "Continue with Google"}
+                                    {loadingGoogle ? "Öffne Google..." : "Mit Google fortfahren"}
                                 </Button>
                             </Field>
 
                             {/* Footer */}
                             <FieldDescription className="text-center">
-                                Already have an account?{" "}
+                                Bereits ein Konto?{" "}
                                 <Link
                                     href="/auth/signin"
                                     className="underline underline-offset-4"
                                 >
-                                    Sign in
+                                    Anmelden
                                 </Link>
                             </FieldDescription>
                         </FieldGroup>

@@ -68,10 +68,10 @@ export default function SignInPage() {
                         <FieldGroup>
                             <div className="flex flex-col items-center gap-2 text-center mb-6">
                                 <h1 className="text-2xl font-bold">
-                                    Sign In
+                                    Anmelden
                                 </h1>
                                 <p className="text-muted-foreground text-sm">
-                                    Enter your credentials or sign in with Google
+                                    Mit Credentials oder Google anmelden
                                 </p>
                             </div>
 
@@ -83,11 +83,11 @@ export default function SignInPage() {
 
                             {/* EMAIL */}
                             <Field>
-                                <FieldLabel htmlFor="email">Email</FieldLabel>
+                                <FieldLabel htmlFor="email">E-Mail</FieldLabel>
                                 <Input
                                     id="email"
                                     type="email"
-                                    placeholder="you@example.com"
+                                    placeholder="du@beispiel.de"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                     required
@@ -96,11 +96,11 @@ export default function SignInPage() {
 
                             {/* PASSWORD */}
                             <Field>
-                                <FieldLabel htmlFor="password">Password</FieldLabel>
+                                <FieldLabel htmlFor="password">Passwort</FieldLabel>
                                 <Input
                                     id="password"
                                     type="password"
-                                    placeholder="Your password"
+                                    placeholder="Dein Passwort"
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                     required
@@ -114,13 +114,13 @@ export default function SignInPage() {
                                     className="w-full"
                                     disabled={loading}
                                 >
-                                    {loading ? "Signing in..." : "Sign In"}
+                                    {loading ? "Anmeldung..." : "Anmelden"}
                                 </Button>
                             </Field>
 
                             {/* Separator */}
                             <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card">
-                                Or continue with
+                                Oder weiter mit
                             </FieldSeparator>
 
                             {/* GOOGLE BUTTON */}
@@ -142,18 +142,18 @@ export default function SignInPage() {
                                             fill="currentColor"
                                         />
                                     </svg>
-                                    {loadingGoogle ? "Opening Google..." : "Continue with Google"}
+                                    {loadingGoogle ? "Öffne Google..." : "Mit Google fortfahren"}
                                 </Button>
                             </Field>
 
                             {/* Footer */}
                             <FieldDescription className="text-center">
-                                Don't have an account?{" "}
+                                Noch kein Konto?{" "}
                                 <Link
                                     href="/auth/signup"
                                     className="underline underline-offset-4"
                                 >
-                                    Sign up
+                                    Registrieren
                                 </Link>
                             </FieldDescription>
                         </FieldGroup>

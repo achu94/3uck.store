@@ -20,7 +20,7 @@ export async function loginUser(credentials: LoginInput) {
         if (result?.error) {
             return {
                 success: false,
-                error: "Invalid email or password",
+                error: "Ungültige E-Mail oder Passwort",
             };
         }
 
@@ -29,13 +29,13 @@ export async function loginUser(credentials: LoginInput) {
         if (error instanceof z.ZodError) {
             return {
                 success: false,
-                error: error.errors[0]?.message || "Validation failed",
+                error: error.errors[0]?.message || "Validierung fehlgeschlagen",
             };
         }
         
         return {
             success: false,
-            error: "Login failed",
+            error: "Anmeldung fehlgeschlagen",
         };
     }
 }
