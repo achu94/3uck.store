@@ -10,7 +10,7 @@ export async function registerUser(userData: RegisterInput) {
     try {
         // Validate input
         const validated = registerSchema.parse(userData);
-        
+
         // Check if user already exists
         const existingUser = await getUserByEmail(validated.email);
         if (existingUser) {
@@ -32,18 +32,18 @@ export async function registerUser(userData: RegisterInput) {
             provider_id: `credentials_${Date.now()}`,
         });
 
-        return { 
-            success: true, 
-            userId: user.id 
+        return {
+            success: true,
+            userId: user.id,
         };
     } catch (error) {
         if (error instanceof z.ZodError) {
             return {
                 success: false,
-                error: error.errors[0]?.message || "Validation failed",
+                error: error.issues[0]?.message || "Validation failed",
             };
         }
-        
+
         return {
             success: false,
             error: "Registrierung fehlgeschlagen",

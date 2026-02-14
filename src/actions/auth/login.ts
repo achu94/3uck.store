@@ -9,7 +9,7 @@ export async function loginUser(credentials: LoginInput) {
     try {
         // Validate input
         const validated = loginSchema.parse(credentials);
-        
+
         // Attempt sign in
         const result = await signIn("credentials", {
             email: validated.email,
@@ -29,10 +29,10 @@ export async function loginUser(credentials: LoginInput) {
         if (error instanceof z.ZodError) {
             return {
                 success: false,
-                error: error.errors[0]?.message || "Validierung fehlgeschlagen",
+                error: error.issues[0]?.message || "Validierung fehlgeschlagen",
             };
         }
-        
+
         return {
             success: false,
             error: "Anmeldung fehlgeschlagen",
