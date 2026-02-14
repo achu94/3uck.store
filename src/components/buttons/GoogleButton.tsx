@@ -2,11 +2,18 @@
 
 import { signIn } from "next-auth/react";
 
-export default function GoogleButton() {
+interface GoogleButtonProps {
+    disabled?: boolean;
+}
+
+export default function GoogleButton({ disabled = false }: GoogleButtonProps) {
   return (
     <button
-      className="border border-slate-300 rounded px-5 py-4 flex items-center"
-      onClick={() => signIn("google")}
+      className={`border border-slate-300 rounded px-5 py-4 flex items-center ${
+        disabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-slate-50'
+      }`}
+      onClick={() => !disabled && signIn("google")}
+      disabled={disabled}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -34,7 +41,7 @@ export default function GoogleButton() {
         ></path>
       </svg>
       <div className="px-2"></div>
-      <span>Sign In with Google</span>
+      <span>{disabled ? "Bitte zuerst bestätigen" : "Mit Google fortfahren"}</span>
     </button>
   );
 }
