@@ -1,7 +1,9 @@
 import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
+import Credentials from "next-auth/providers/credentials";
+import bcrypt from "bcryptjs";
 
-import { getUserByProviderId, createUser } from "@/services/user";
+import { getUserByProviderId, createUser, getUserByEmail } from "@/services/user";
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
     providers: [
@@ -9,6 +11,39 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
             clientId: process.env.AUTH_AUTH_GOOGLE_ID!,
             clientSecret: process.env.AUTH_AUTH_GOOGLE_SECRET!,
         }),
+        Credentials({
+            name: "credentials",
+            credentials: {
+                email: { label: "Email", type: "email" },
+                password: { label: "Password", type: "password" }
+            },
+            async authorize(credentials) {
+                if (!credentials?.email || !credentials?.password) {
+                    return null;
+                }
+
+                const user = await getUserByEmail(credentials.email as string);
+                if (!user || !user.password) {
+                    return null;
+                }
+
+                const isValid = await bcrypt.compare(
+                    credentials.password as string,
+                    user.password
+                );
+
+                if (!isValid) {
+                    return null;
+                }
+
+                return {
+                    id: user.id,
+                    email: user.email,
+                    name: user.name,
+                    image: user.image
+                };
+            }
+        })
     ],
 
     pages: {
@@ -21,7 +56,15 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
     },
 
     callbacks: {
-        async signIn({ user, account }) {
+        async signIn({ user, account, credentials }) {
+            // Credentials login
+            if (account?.provider === "credentials") {
+                (user as any).dbUserId = user.id;
+                (user as any).providerId = "credentials";
+                return true;
+            }
+
+            // OAuth login
             if (!account?.providerAccountId || !user?.email) return false;
 
             let dbUser = await getUserByProviderId(account.providerAccountId);
