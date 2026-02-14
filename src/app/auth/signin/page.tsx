@@ -48,16 +48,13 @@ export default function SignInPage() {
     }
 
     return (
-        <div className="min-h-screen flex items-center justify-center p-6">
-            <Card className="w-full max-w-md">
+        <div className="min-h-screen flex items-center justify-center">
+            <Card className="w-full max-w-md min-h-screen md:min-h-auto">
                 <CardContent className="p-6">
                     <form onSubmit={handleCredentialsLogin}>
                         <FieldGroup>
                             <div className="flex flex-col items-center gap-2 text-center mb-6">
                                 <h1 className="text-2xl font-bold">Anmelden</h1>
-                                <p className="text-muted-foreground text-sm">
-                                    Mit Credentials oder Google anmelden
-                                </p>
                             </div>
 
                             {error && (

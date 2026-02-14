@@ -56,8 +56,8 @@ export default function RegisterPage() {
     }
 
     return (
-        <div className="min-h-screen flex items-center justify-center p-6">
-            <Card className="w-full max-w-md">
+        <div className="min-h-screen flex items-center justify-center">
+            <Card className="w-full max-w-md min-h-screen md:min-h-auto">
                 <CardContent className="p-6">
                     <form onSubmit={handleRegister}>
                         <FieldGroup>
