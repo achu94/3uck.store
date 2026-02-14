@@ -4,8 +4,8 @@ import * as React from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
+import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import GoogleButton from "@/components/buttons/GoogleButton";
 import { Card, CardContent } from "@/components/ui/card";
 import {
     Field,
@@ -15,33 +15,41 @@ import {
     FieldSeparator,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { loginUser } from "@/actions/auth/login";
+import { registerUser } from "@/actions/auth/register";
+import GoogleButton from "@/components/buttons/GoogleButton";
 
-export default function SignInPage() {
+export default function RegisterPage() {
     const router = useRouter();
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
+    const [name, setName] = React.useState("");
     const [loading, setLoading] = React.useState(false);
     const [error, setError] = React.useState("");
+    const [success, setSuccess] = React.useState(false);
 
-    async function handleCredentialsLogin(e: React.FormEvent) {
+    async function handleRegister(e: React.FormEvent) {
         e.preventDefault();
 
         try {
             setLoading(true);
             setError("");
+            setSuccess(false);
 
-            const result = await loginUser({ email, password });
+            const result = await registerUser({ email, password, name });
 
             if (!result.success) {
-                setError(result.error || "Login failed");
+                setError(result.error || "Registration failed");
                 return;
             }
 
-            router.push("/dashboard");
-            router.refresh();
+            setSuccess(true);
+
+            // Auto login after successful registration
+            setTimeout(() => {
+                router.push("/dashboard");
+            }, 2000);
         } catch (err) {
-            setError("Login failed");
+            setError("Registration failed");
         } finally {
             setLoading(false);
         }
@@ -51,12 +59,14 @@ export default function SignInPage() {
         <div className="min-h-screen flex items-center justify-center p-6">
             <Card className="w-full max-w-md">
                 <CardContent className="p-6">
-                    <form onSubmit={handleCredentialsLogin}>
+                    <form onSubmit={handleRegister}>
                         <FieldGroup>
                             <div className="flex flex-col items-center gap-2 text-center mb-6">
-                                <h1 className="text-2xl font-bold">Anmelden</h1>
+                                <h1 className="text-2xl font-bold">
+                                    Konto erstellen
+                                </h1>
                                 <p className="text-muted-foreground text-sm">
-                                    Mit Credentials oder Google anmelden
+                                    Mit Credentials oder Google registrieren
                                 </p>
                             </div>
 
@@ -65,6 +75,26 @@ export default function SignInPage() {
                                     {error}
                                 </div>
                             )}
+
+                            {success && (
+                                <div className="bg-green-500/15 text-green-600 text-sm p-3 rounded-md">
+                                    Konto erfolgreich erstellt! Weiterleitung
+                                    zum Dashboard...
+                                </div>
+                            )}
+
+                            {/* NAME */}
+                            <Field>
+                                <FieldLabel htmlFor="name">Name</FieldLabel>
+                                <Input
+                                    id="name"
+                                    type="text"
+                                    placeholder="Dein Name"
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                    required
+                                />
+                            </Field>
 
                             {/* EMAIL */}
                             <Field>
@@ -94,16 +124,21 @@ export default function SignInPage() {
                                     }
                                     required
                                 />
+                                <FieldDescription>
+                                    Muss mindestens 6 Zeichen lang sein
+                                </FieldDescription>
                             </Field>
 
-                            {/* LOGIN BUTTON */}
+                            {/* REGISTER BUTTON */}
                             <Field>
                                 <Button
                                     type="submit"
                                     className="w-full"
-                                    disabled={loading}
+                                    disabled={loading || success}
                                 >
-                                    {loading ? "Anmeldung..." : "Anmelden"}
+                                    {loading
+                                        ? "Erstelle Konto..."
+                                        : "Konto erstellen"}
                                 </Button>
                             </Field>
 
@@ -119,12 +154,12 @@ export default function SignInPage() {
 
                             {/* Footer */}
                             <FieldDescription className="text-center">
-                                Noch kein Konto?{" "}
+                                Bereits ein Konto?{" "}
                                 <Link
-                                    href="/auth/signup"
+                                    href="/auth/signin"
                                     className="underline underline-offset-4"
                                 >
-                                    Registrieren
+                                    Anmelden
                                 </Link>
                             </FieldDescription>
                         </FieldGroup>
