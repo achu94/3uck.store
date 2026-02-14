@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import { useRouter } from "next/navigation";
-import { signIn } from "next-auth/react";
 import Link from "next/link";
 
 import { cn } from "@/lib/utils";
@@ -17,6 +16,7 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { registerUser } from "@/actions/auth/register";
+import GoogleButton from "@/components/buttons/GoogleButton";
 
 export default function RegisterPage() {
     const router = useRouter();
@@ -24,18 +24,17 @@ export default function RegisterPage() {
     const [password, setPassword] = React.useState("");
     const [name, setName] = React.useState("");
     const [loading, setLoading] = React.useState(false);
-    const [loadingGoogle, setLoadingGoogle] = React.useState(false);
     const [error, setError] = React.useState("");
     const [success, setSuccess] = React.useState(false);
 
     async function handleRegister(e: React.FormEvent) {
         e.preventDefault();
-        
+
         try {
             setLoading(true);
             setError("");
             setSuccess(false);
-            
+
             const result = await registerUser({ email, password, name });
 
             if (!result.success) {
@@ -44,27 +43,15 @@ export default function RegisterPage() {
             }
 
             setSuccess(true);
-            
+
             // Auto login after successful registration
             setTimeout(() => {
                 router.push("/dashboard");
             }, 2000);
-            
         } catch (err) {
             setError("Registration failed");
         } finally {
             setLoading(false);
-        }
-    }
-
-    async function handleGoogleSignIn() {
-        try {
-            setLoadingGoogle(true);
-            await signIn("google", {
-                callbackUrl: "/dashboard",
-            });
-        } finally {
-            setLoadingGoogle(false);
         }
     }
 
@@ -91,7 +78,8 @@ export default function RegisterPage() {
 
                             {success && (
                                 <div className="bg-green-500/15 text-green-600 text-sm p-3 rounded-md">
-                                    Konto erfolgreich erstellt! Weiterleitung zum Dashboard...
+                                    Konto erfolgreich erstellt! Weiterleitung
+                                    zum Dashboard...
                                 </div>
                             )}
 
@@ -123,13 +111,17 @@ export default function RegisterPage() {
 
                             {/* PASSWORD */}
                             <Field>
-                                <FieldLabel htmlFor="password">Passwort</FieldLabel>
+                                <FieldLabel htmlFor="password">
+                                    Passwort
+                                </FieldLabel>
                                 <Input
                                     id="password"
                                     type="password"
                                     placeholder="Dein Passwort"
                                     value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
+                                    onChange={(e) =>
+                                        setPassword(e.target.value)
+                                    }
                                     required
                                 />
                                 <FieldDescription>
@@ -144,7 +136,9 @@ export default function RegisterPage() {
                                     className="w-full"
                                     disabled={loading || success}
                                 >
-                                    {loading ? "Erstelle Konto..." : "Konto erstellen"}
+                                    {loading
+                                        ? "Erstelle Konto..."
+                                        : "Konto erstellen"}
                                 </Button>
                             </Field>
 
@@ -155,25 +149,7 @@ export default function RegisterPage() {
 
                             {/* GOOGLE BUTTON */}
                             <Field>
-                                <Button
-                                    variant="outline"
-                                    type="button"
-                                    className="w-full"
-                                    onClick={handleGoogleSignIn}
-                                    disabled={loadingGoogle}
-                                >
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 24 24"
-                                        className="mr-2 h-4 w-4"
-                                    >
-                                        <path
-                                            d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z"
-                                            fill="currentColor"
-                                        />
-                                    </svg>
-                                    {loadingGoogle ? "Öffne Google..." : "Mit Google fortfahren"}
-                                </Button>
+                                <GoogleButton />
                             </Field>
 
                             {/* Footer */}
