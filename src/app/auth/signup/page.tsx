@@ -22,7 +22,8 @@ export default function RegisterPage() {
     const router = useRouter();
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
-    const [name, setName] = React.useState("");
+    const [firstName, setFirstName] = React.useState("");
+    const [lastName, setLastName] = React.useState("");
     const [loading, setLoading] = React.useState(false);
     const [error, setError] = React.useState("");
     const [success, setSuccess] = React.useState(false);
@@ -35,7 +36,11 @@ export default function RegisterPage() {
             setError("");
             setSuccess(false);
 
-            const result = await registerUser({ email, password, name });
+            const result = await registerUser({ 
+                email, 
+                password, 
+                name: `${firstName} ${lastName}` 
+            });
 
             if (!result.success) {
                 setError(result.error || "Registration failed");
@@ -83,15 +88,28 @@ export default function RegisterPage() {
                                 </div>
                             )}
 
-                            {/* NAME */}
+                            {/* FIRST NAME */}
                             <Field>
-                                <FieldLabel htmlFor="name">Name</FieldLabel>
+                                <FieldLabel htmlFor="first_name">Vorname</FieldLabel>
                                 <Input
-                                    id="name"
+                                    id="first_name"
                                     type="text"
-                                    placeholder="Dein Name"
-                                    value={name}
-                                    onChange={(e) => setName(e.target.value)}
+                                    placeholder="Dein Vorname"
+                                    value={firstName}
+                                    onChange={(e) => setFirstName(e.target.value)}
+                                    required
+                                />
+                            </Field>
+
+                            {/* LAST NAME */}
+                            <Field>
+                                <FieldLabel htmlFor="last_name">Nachname</FieldLabel>
+                                <Input
+                                    id="last_name"
+                                    type="text"
+                                    placeholder="Dein Nachname"
+                                    value={lastName}
+                                    onChange={(e) => setLastName(e.target.value)}
                                     required
                                 />
                             </Field>
