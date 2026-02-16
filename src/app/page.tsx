@@ -12,7 +12,7 @@ import { FooterSection } from "@/components/home/FooterSection";
 
 export default function Home() {
     return (
-        <main className="min-h-screen max-w-6xl mx-auto">
+        <main className="min-h-screen mx-auto">
             {/* Banner */}
             <BannerSection show={true} />
 
