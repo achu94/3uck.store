@@ -11,7 +11,7 @@ import {
     Box,
     Globe,
     Users,
-    CheckCircle2,
+    Check,
     ArrowRight,
 } from "lucide-react";
 
@@ -135,15 +135,15 @@ export default async function Home() {
                             {/* Trust Badge */}
                             <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
                                 <div className="flex items-center gap-1">
-                                    <CheckCircle2 className="w-4 h-4 text-green-600" />
+                                    <Check className="w-4 h-4 text-primary" />
                                     <span>Kostenlos starten</span>
                                 </div>
                                 <div className="flex items-center gap-1">
-                                    <CheckCircle2 className="w-4 h-4 text-green-600" />
+                                    <Check className="w-4 h-4 text-primary" />
                                     <span>Keine Credit-Card</span>
                                 </div>
                                 <div className="flex items-center gap-1">
-                                    <CheckCircle2 className="w-4 h-4 text-green-600" />
+                                    <Check className="w-4 h-4 text-primary" />
                                     <span>Keine Gebühren</span>
                                 </div>
                             </div>
@@ -269,11 +269,11 @@ export default async function Home() {
             {/* CTA Section */}
             <section className="container mx-auto px-6 py-16 md:py-24">
                 <div className="max-w-4xl mx-auto">
-                    <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary to-primary/90 p-12 text-center text-primary-foreground">
+                    <div className="relative overflow-hidden rounded-2xl bg-primary p-12 text-center text-primary-foreground">
                         {/* Decorative Pattern */}
                         <div className="absolute inset-0 opacity-10">
-                            <div className="absolute top-0 left-0 w-64 h-64 bg-white rounded-full blur-3xl transform -translate-x-1/2 -translate-y-1/2" />
-                            <div className="absolute bottom-0 right-0 w-64 h-64 bg-white rounded-full blur-3xl transform translate-x-1/2 translate-y-1/2" />
+                            <div className="absolute top-0 left-0 w-64 h-64 bg-primary-foreground rounded-full blur-3xl transform -translate-x-1/2 -translate-y-1/2" />
+                            <div className="absolute bottom-0 right-0 w-64 h-64 bg-primary-foreground rounded-full blur-3xl transform translate-x-1/2 translate-y-1/2" />
                         </div>
 
                         <div className="relative space-y-8">
@@ -299,8 +299,8 @@ export default async function Home() {
                                 <Button
                                     asChild
                                     size="lg"
-                                    variant="outline"
-                                    className="w-full sm:w-auto bg-primary-foreground text-primary hover:bg-white/90"
+                                    variant="secondary"
+                                    className="w-full sm:w-auto"
                                 >
                                     <Link href="/auth/signin">
                                         Einloggen
