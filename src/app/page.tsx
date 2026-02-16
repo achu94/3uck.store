@@ -30,6 +30,13 @@ export default async function Home() {
                 <div className="flex flex-col items-center gap-4">
                     <GoogleButton />
 
+                    <a
+                        href="/auth/signup"
+                        className="text-sm text-muted-foreground hover:text-primary underline underline-offset-4"
+                    >
+                        oder mit E-Mail registrieren
+                    </a>
+
                     <p className="text-xs text-muted-foreground">
                         Kostenlos starten · Kein Credit-Card nötig
                     </p>
