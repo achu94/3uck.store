@@ -23,7 +23,7 @@ export default function GoogleButton({
     return (
         <button
             type="button"
-            className={`border border-slate-300 rounded px-5 py-4 flex items-center justify-center w-full gap-2 hover:bg-slate-800 ${className}`}
+            className={`border rounded px-4 py-3 flex items-center justify-center w-full gap-2 hover:bg-muted transition-colors ${className}`}
             onClick={handleClick}
             disabled={loading || disabled}
             {...props}
