@@ -8,6 +8,11 @@ import {
     DollarSign,
     Shield,
     Zap,
+    Box,
+    Globe,
+    Users,
+    CheckCircle2,
+    ArrowRight,
 } from "lucide-react";
 
 export default async function Home() {
@@ -21,99 +26,238 @@ export default async function Home() {
         {
             icon: Store,
             title: "Eigener Store",
-            description: "Erstelle deinen Store in 2 Minuten. Keine technische Kenntnisse nötig.",
+            description: "Erstelle deinen professionellen Store in 2 Minuten. Keine technischen Kenntnisse nötig.",
+            stats: "2 Minuten Setup",
         },
         {
             icon: DollarSign,
-            title: "Volle Einnahmen",
-            description: "Du bekommst 100% deiner Einnahmen. Keine versteckten Gebühren.",
+            title: "100% Einnahmen",
+            description: "Du bekommst 100% deiner Einnahmen. Keine versteckten Gebühren, keine Abzüge.",
+            stats: "Keine Gebühren",
         },
         {
             icon: Shield,
-            title: "Keine Abhängigkeit",
-            description: "Dein Store, deine Domain, deine Kunden. Volle Kontrolle.",
+            title: "Volle Kontrolle",
+            description: "Dein Store, deine Domain, deine Kunden. Keine Marktplatz-Abhängigkeit.",
+            stats: "100% Eigenständig",
         },
         {
             icon: Zap,
             title: "Schnell & Einfach",
-            description: "Direkter Upload von 3D-Modellen und automatische Print-Angebote.",
+            description: "Direkter Upload von 3D-Modellen und automatische Print-Angebote in Sekunden.",
+            stats: "Sofort live",
         },
     ];
 
+    const benefits = [
+        {
+            icon: Globe,
+            title: "Eigene Domain",
+            description: "Verbinde deine eigene Domain für professionellen Auftritt",
+        },
+        {
+            icon: Box,
+            title: "Digital & Physisch",
+            description: "Verkaufe sowohl STL-Dateien als auch gedruckte Produkte",
+        },
+        {
+            icon: Users,
+            title: "Direkter Kundenkontakt",
+            description: "Kommuniziere direkt mit deinen Kunden ohne Middleman",
+        },
+    ];
+
+    const stats = [
+        { value: "0€", label: "Startkosten" },
+        { value: "0%", label: "Gebühren" },
+        { value: "2", label: "Minuten" },
+        { value: "100%", label: "Einnahmen" },
+    ];
+
     return (
-        <main className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
-            {/* Hero Section */}
-            <section className="container mx-auto px-6 py-16 md:py-24">
-                <div className="max-w-4xl mx-auto text-center space-y-8">
-                    {/* Badge */}
-                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium">
-                        <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-                        <span>3uck.store ist jetzt live</span>
-                    </div>
-
-                    {/* Headline */}
-                    <h1 className="text-4xl md:text-6xl font-bold tracking-tight">
-                        Verkaufe deine 3D-Modelle
-                        <span className="block text-muted-foreground mt-2">
-                            & Prints – ganz einfach
-                        </span>
-                    </h1>
-
-                    {/* Subline */}
-                    <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-                        Erstelle deinen eigenen Store für 3D-Druck-Modelle und
-                        physische Prints. Ohne Setup-Hölle. Ohne
-                        Marktplatz-Abhängigkeit.
-                    </p>
-
-                    {/* CTA Buttons */}
-                    <div className="flex flex-col sm:flex-row items-center justify-center gap-4 max-w-md mx-auto">
-                        <GoogleButton />
-
-                        <Button asChild variant="outline" className="w-full">
-                            <Link href="/auth/signup">
-                                Mit E-Mail starten
-                            </Link>
+        <main className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-slate-50">
+            {/* Navbar */}
+            <nav className="container mx-auto px-6 py-4">
+                <div className="flex items-center justify-between">
+                    <Link href="/" className="flex items-center gap-2">
+                        <Box className="w-8 h-8 text-primary" />
+                        <span className="font-bold text-xl">3uck.store</span>
+                    </Link>
+                    <div className="flex items-center gap-4">
+                        <Button asChild variant="ghost">
+                            <Link href="/auth/signin">Einloggen</Link>
+                        </Button>
+                        <Button asChild>
+                            <Link href="/auth/signup">Loslegen</Link>
                         </Button>
                     </div>
+                </div>
+            </nav>
 
-                    {/* Trust Badge */}
-                    <div className="flex items-center justify-center gap-6 text-sm text-muted-foreground pt-4">
-                        <span>✓ Kostenlos starten</span>
-                        <span>✓ Kein Credit-Card nötig</span>
-                        <span>✓ Keine Gebühren</span>
+            {/* Hero Section */}
+            <section className="container mx-auto px-6 py-16 md:py-24">
+                <div className="max-w-6xl mx-auto">
+                    <div className="grid lg:grid-cols-2 gap-12 items-center">
+                        {/* Content */}
+                        <div className="space-y-8">
+                            {/* Badge */}
+                            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium">
+                                <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                                <span>3uck.store ist jetzt live</span>
+                            </div>
+
+                            {/* Headline */}
+                            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-tight">
+                                Dein Store für
+                                <span className="block text-primary">
+                                    3D-Modelle & Prints
+                                </span>
+                            </h1>
+
+                            {/* Subline */}
+                            <p className="text-lg md:text-xl text-muted-foreground max-w-xl">
+                                Erstelle deinen eigenen Store für 3D-Druck-Modelle
+                                und physische Prints. Kostenlos. Ohne
+                                Marktplatz-Abhängigkeit.
+                            </p>
+
+                            {/* CTA Buttons */}
+                            <div className="flex flex-col sm:flex-row items-center gap-4 max-w-md">
+                                <GoogleButton />
+
+                                <Button asChild variant="outline" className="w-full sm:w-auto">
+                                    <Link href="/auth/signup">
+                                        Mit E-Mail starten
+                                    </Link>
+                                </Button>
+                            </div>
+
+                            {/* Trust Badge */}
+                            <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
+                                <div className="flex items-center gap-1">
+                                    <CheckCircle2 className="w-4 h-4 text-green-600" />
+                                    <span>Kostenlos starten</span>
+                                </div>
+                                <div className="flex items-center gap-1">
+                                    <CheckCircle2 className="w-4 h-4 text-green-600" />
+                                    <span>Keine Credit-Card</span>
+                                </div>
+                                <div className="flex items-center gap-1">
+                                    <CheckCircle2 className="w-4 h-4 text-green-600" />
+                                    <span>Keine Gebühren</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Visual - 3D Cube Icon */}
+                        <div className="hidden lg:flex justify-center">
+                            <div className="relative">
+                                <div className="absolute inset-0 bg-primary/10 rounded-2xl transform rotate-6" />
+                                <div className="relative bg-card border rounded-2xl p-12 shadow-2xl">
+                                    <div className="flex items-center justify-center">
+                                        <Box className="w-32 h-32 text-primary animate-pulse" />
+                                    </div>
+                                    <div className="mt-8 text-center">
+                                        <p className="text-sm text-muted-foreground">
+                                            Dein Store. Deine Regeln.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Stats Section */}
+            <section className="container mx-auto px-6 py-16 border-y bg-card/50">
+                <div className="max-w-6xl mx-auto">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+                        {stats.map((stat) => (
+                            <div key={stat.label} className="text-center space-y-2">
+                                <div className="text-3xl md:text-4xl font-bold text-primary">
+                                    {stat.value}
+                                </div>
+                                <div className="text-sm text-muted-foreground">
+                                    {stat.label}
+                                </div>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </section>
 
             {/* Features Section */}
-            <section className="container mx-auto px-6 py-16">
+            <section className="container mx-auto px-6 py-16 md:py-24">
                 <div className="max-w-6xl mx-auto">
-                    <div className="text-center mb-12">
-                        <h2 className="text-3xl font-bold tracking-tight">
+                    <div className="text-center mb-16">
+                        <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
                             Warum 3uck.store?
                         </h2>
-                        <p className="text-muted-foreground mt-2">
-                            Alles, was du für deinen 3D-Druck-Store brauchst.
+                        <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                            Alles, was du für einen professionellen 3D-Druck-Store brauchst.
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {features.map((feature) => {
                             const Icon = feature.icon;
                             return (
                                 <div
                                     key={feature.title}
-                                    className="border rounded-lg p-6 bg-card hover:shadow-lg transition-shadow"
+                                    className="group relative border rounded-xl p-8 bg-card hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
                                 >
-                                    <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
-                                        <Icon className="w-6 h-6 text-primary" />
+                                    <div className="flex items-start gap-4">
+                                        <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
+                                            <Icon className="w-7 h-7 text-primary" />
+                                        </div>
+                                        <div className="flex-1">
+                                            <h3 className="font-bold text-lg mb-2 group-hover:text-primary transition-colors">
+                                                {feature.title}
+                                            </h3>
+                                            <p className="text-muted-foreground mb-4">
+                                                {feature.description}
+                                            </p>
+                                            <div className="text-sm font-medium text-primary">
+                                                {feature.stats}
+                                            </div>
+                                        </div>
                                     </div>
-                                    <h3 className="font-semibold mb-2">
-                                        {feature.title}
+                                </div>
+                            );
+                        })}
+                    </div>
+                </div>
+            </section>
+
+            {/* Benefits Section */}
+            <section className="container mx-auto px-6 py-16 bg-card/50">
+                <div className="max-w-6xl mx-auto">
+                    <div className="text-center mb-16">
+                        <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
+                            Noch mehr Vorteile
+                        </h2>
+                        <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                            Was dich von Marktplätzen unterscheidet.
+                        </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        {benefits.map((benefit) => {
+                            const Icon = benefit.icon;
+                            return (
+                                <div
+                                    key={benefit.title}
+                                    className="text-center space-y-4 p-6 rounded-xl border bg-card"
+                                >
+                                    <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto">
+                                        <Icon className="w-8 h-8 text-primary" />
+                                    </div>
+                                    <h3 className="font-bold text-xl">
+                                        {benefit.title}
                                     </h3>
-                                    <p className="text-sm text-muted-foreground">
-                                        {feature.description}
+                                    <p className="text-muted-foreground">
+                                        {benefit.description}
                                     </p>
                                 </div>
                             );
@@ -123,39 +267,120 @@ export default async function Home() {
             </section>
 
             {/* CTA Section */}
-            <section className="container mx-auto px-6 py-16">
-                <div className="max-w-3xl mx-auto text-center space-y-6 p-8 rounded-lg border bg-card">
-                    <h2 className="text-2xl font-bold tracking-tight">
-                        Bereit loszulegen?
-                    </h2>
-                    <p className="text-muted-foreground">
-                        Starte jetzt kostenlos und erstelle deinen ersten Store
-                        in wenigen Minuten.
-                    </p>
-                    <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                        <Button asChild size="lg" className="w-full sm:w-auto">
-                            <Link href="/auth/signup">
-                                Kostenlos starten
-                            </Link>
-                        </Button>
-                        <Button
-                            asChild
-                            variant="outline"
-                            size="lg"
-                            className="w-full sm:w-auto"
-                        >
-                            <Link href="/auth/signin">
-                                Einloggen
-                            </Link>
-                        </Button>
+            <section className="container mx-auto px-6 py-16 md:py-24">
+                <div className="max-w-4xl mx-auto">
+                    <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary to-primary/90 p-12 text-center text-primary-foreground">
+                        {/* Decorative Pattern */}
+                        <div className="absolute inset-0 opacity-10">
+                            <div className="absolute top-0 left-0 w-64 h-64 bg-white rounded-full blur-3xl transform -translate-x-1/2 -translate-y-1/2" />
+                            <div className="absolute bottom-0 right-0 w-64 h-64 bg-white rounded-full blur-3xl transform translate-x-1/2 translate-y-1/2" />
+                        </div>
+
+                        <div className="relative space-y-8">
+                            <h2 className="text-3xl md:text-4xl font-bold">
+                                Bereit loszulegen?
+                            </h2>
+                            <p className="text-lg opacity-90 max-w-2xl mx-auto">
+                                Starte jetzt kostenlos und erstelle deinen
+                                professionellen 3D-Druck-Store in wenigen Minuten.
+                            </p>
+                            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                                <Button
+                                    asChild
+                                    size="lg"
+                                    variant="secondary"
+                                    className="w-full sm:w-auto"
+                                >
+                                    <Link href="/auth/signup">
+                                        Kostenlos starten
+                                        <ArrowRight className="ml-2 w-4 h-4" />
+                                    </Link>
+                                </Button>
+                                <Button
+                                    asChild
+                                    size="lg"
+                                    variant="outline"
+                                    className="w-full sm:w-auto bg-primary-foreground text-primary hover:bg-white/90"
+                                >
+                                    <Link href="/auth/signin">
+                                        Einloggen
+                                    </Link>
+                                </Button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
 
             {/* Footer */}
-            <footer className="container mx-auto px-6 py-8 border-t">
-                <div className="max-w-6xl mx-auto text-center text-sm text-muted-foreground">
-                    <p>© {new Date().getFullYear()} 3uck.store</p>
+            <footer className="container mx-auto px-6 py-12 border-t">
+                <div className="max-w-6xl mx-auto">
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                        <div className="md:col-span-2">
+                            <div className="flex items-center gap-2 mb-4">
+                                <Box className="w-6 h-6 text-primary" />
+                                <span className="font-bold text-lg">3uck.store</span>
+                            </div>
+                            <p className="text-muted-foreground max-w-sm">
+                                Deine Plattform für 3D-Druck-Modelle und physische Prints.
+                                Kostenlos. Ohne Gebühren. Deine Kontrolle.
+                            </p>
+                        </div>
+                        <div>
+                            <h4 className="font-semibold mb-4">Produkt</h4>
+                            <ul className="space-y-2 text-muted-foreground">
+                                <li>
+                                    <Link href="/features" className="hover:text-primary transition-colors">
+                                        Features
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link href="/pricing" className="hover:text-primary transition-colors">
+                                        Preise
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link href="/api" className="hover:text-primary transition-colors">
+                                        API
+                                    </Link>
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 className="font-semibold mb-4">Rechtliches</h4>
+                            <ul className="space-y-2 text-muted-foreground">
+                                <li>
+                                    <Link href="/privacy" className="hover:text-primary transition-colors">
+                                        Datenschutz
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link href="/terms" className="hover:text-primary transition-colors">
+                                        AGB
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link href="/imprint" className="hover:text-primary transition-colors">
+                                        Impressum
+                                    </Link>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div className="pt-8 border-t flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
+                        <p>© {new Date().getFullYear()} 3uck.store. Alle Rechte vorbehalten.</p>
+                        <div className="flex items-center gap-4">
+                            <Link href="#" className="hover:text-primary transition-colors">
+                                Twitter
+                            </Link>
+                            <Link href="#" className="hover:text-primary transition-colors">
+                                GitHub
+                            </Link>
+                            <Link href="#" className="hover:text-primary transition-colors">
+                                Discord
+                            </Link>
+                        </div>
+                    </div>
                 </div>
             </footer>
         </main>
