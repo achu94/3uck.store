@@ -317,7 +317,7 @@ export default async function Home() {
             </section>
 
             {/* Roadmap Section */}
-            <section className="container mx-auto px-6 py-16 md:py-24 bg-muted/30">
+            <section className="container mx-auto px-6 py-16 md:py-24">
                 <div className="max-w-6xl mx-auto">
                     <div className="text-center mb-16">
                         <div className="inline-flex items-center gap-2 mb-4">
@@ -331,7 +331,7 @@ export default async function Home() {
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 ">
                         {roadmap.map((quarter) => (
                             <div
                                 key={quarter.quarter}
