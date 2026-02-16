@@ -363,35 +363,6 @@ export default async function Home() {
                             </div>
                         ))}
                     </div>
-
-                    {/* Backlog Preview */}
-                    <div className="mt-12">
-                        <div className="border rounded-xl p-6 bg-card/50">
-                            <div className="flex items-center gap-3 mb-6">
-                                <Lightbulb className="w-8 h-8 text-primary" />
-                                <div>
-                                    <h3 className="font-bold text-lg">Backlog Items</h3>
-                                    <p className="text-sm text-muted-foreground">
-                                        Nice to Have – Ideen und Features für später
-                                    </p>
-                                </div>
-                            </div>
-                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                                <div className="text-sm text-muted-foreground">
-                                    <span className="font-semibold text-foreground">Dark Mode</span>
-                                </div>
-                                <div className="text-sm text-muted-foreground">
-                                    <span className="font-semibold text-foreground">Analytics</span>
-                                </div>
-                                <div className="text-sm text-muted-foreground">
-                                    <span className="font-semibold text-foreground">Email Notifications</span>
-                                </div>
-                                <div className="text-sm text-muted-foreground">
-                                    <span className="font-semibold text-foreground">PWA</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </section>
 
