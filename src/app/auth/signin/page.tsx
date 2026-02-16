@@ -1,44 +1,133 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import * as React from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
-import { getProviders } from "next-auth/react";
+import { Button } from "@/components/ui/button";
+import GoogleButton from "@/components/buttons/GoogleButton";
+import { Card, CardContent } from "@/components/ui/card";
+import {
+    Field,
+    FieldDescription,
+    FieldGroup,
+    FieldLabel,
+    FieldSeparator,
+} from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+import { loginUser } from "@/actions/auth/login";
 
-import Divider from "@/components/Divider";
-import LoginForm from "@/components/LoginForm";
-import LoginButton from "@/components/buttons/LoginButton";
+export default function SignInPage() {
+    const router = useRouter();
+    const [email, setEmail] = React.useState("");
+    const [password, setPassword] = React.useState("");
+    const [loading, setLoading] = React.useState(false);
+    const [error, setError] = React.useState("");
 
-type Providers = Awaited<ReturnType<typeof getProviders>>
+    async function handleCredentialsLogin(e: React.FormEvent) {
+        e.preventDefault();
 
-const renderLoginButtons = (
-  providers: Providers | null
-) =>
-  providers
-    ? Object.values(providers)
-      .filter((provider) => provider !== null)
-      .filter(({ id }) => id !== "hasura-credentials")
-      .map((provider) => <LoginButton auth={provider} key={provider.id} />)
-    : null;
+        try {
+            setLoading(true);
+            setError("");
 
-export default function SignIn() {
-  const [providers, setProviders] = useState<Providers | null>(null);
+            const result = await loginUser({ email, password });
 
-  useEffect(() => {
-    async function fetchProviders() {
-      const response = await getProviders();
-      setProviders(response);
+            if (!result.success) {
+                setError(result.error || "Login failed");
+                return;
+            }
+
+            router.push("/dashboard");
+            router.refresh();
+        } catch (err) {
+            setError("Login failed");
+        } finally {
+            setLoading(false);
+        }
     }
-    fetchProviders();
-  }, []);
 
-  return (
-    <div className="flex min-h-screen flex-col items-center mx-auto p-24 max-w-[40rem]">
-      <h1 className="font-bold text-3xl">Sign in to your account</h1>
-      <LoginForm />
-      <Divider />
-      <div className="flex flex-col items-center gap-y-4">
-        {renderLoginButtons(providers)}
-      </div>
-    </div>
-  );
+    return (
+        <div className="min-h-screen flex items-center justify-center">
+            <Card className="w-full max-w-md min-h-screen md:min-h-auto">
+                <CardContent className="p-6">
+                    <form onSubmit={handleCredentialsLogin}>
+                        <FieldGroup>
+                            <div className="flex flex-col items-center gap-2 text-center mb-6">
+                                <h1 className="text-2xl font-bold">Anmelden</h1>
+                            </div>
+
+                            {error && (
+                                <div className="bg-destructive/15 text-destructive text-sm p-3 rounded-md">
+                                    {error}
+                                </div>
+                            )}
+
+                            {/* EMAIL */}
+                            <Field>
+                                <FieldLabel htmlFor="email">E-Mail</FieldLabel>
+                                <Input
+                                    id="email"
+                                    type="email"
+                                    placeholder="du@beispiel.de"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    required
+                                />
+                            </Field>
+
+                            {/* PASSWORD */}
+                            <Field>
+                                <FieldLabel htmlFor="password">
+                                    Passwort
+                                </FieldLabel>
+                                <Input
+                                    id="password"
+                                    type="password"
+                                    placeholder="Dein Passwort"
+                                    value={password}
+                                    onChange={(e) =>
+                                        setPassword(e.target.value)
+                                    }
+                                    required
+                                />
+                            </Field>
+
+                            {/* LOGIN BUTTON */}
+                            <Field>
+                                <Button
+                                    type="submit"
+                                    className="w-full"
+                                    disabled={loading}
+                                >
+                                    {loading ? "Anmeldung..." : "Anmelden"}
+                                </Button>
+                            </Field>
+
+                            {/* Separator */}
+                            <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card">
+                                Oder weiter mit
+                            </FieldSeparator>
+
+                            {/* GOOGLE BUTTON */}
+                            <Field>
+                                <GoogleButton />
+                            </Field>
+
+                            {/* Footer */}
+                            <FieldDescription className="text-center">
+                                Noch kein Konto?{" "}
+                                <Link
+                                    href="/auth/signup"
+                                    className="underline underline-offset-4"
+                                >
+                                    Registrieren
+                                </Link>
+                            </FieldDescription>
+                        </FieldGroup>
+                    </form>
+                </CardContent>
+            </Card>
+        </div>
+    );
 }

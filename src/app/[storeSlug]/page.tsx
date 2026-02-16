@@ -3,13 +3,13 @@ import { RESERVED_SLUGS } from "@/lib/reservedSlugs";
 import { PublicStore } from "@/app/components/public/PublicStore";
 
 interface PageProps {
-    params: { storeSlug: string };
+    params: Promise<{ storeSlug: string }>;
 }
 
-export default function Page({ params }: PageProps) {
-    const slug = params.storeSlug.toLowerCase();
+export default async function Page({ params }: PageProps) {
+    const { storeSlug } = await params;
+    const slug = storeSlug.toLowerCase();
 
-    // Block reserved pages
     if (RESERVED_SLUGS.includes(slug)) {
         notFound();
     }
