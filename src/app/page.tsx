@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import Link from "next/link";
 import { auth } from "@/lib/auth";
 import GoogleButton from "@/components/buttons/GoogleButton";
 
@@ -30,12 +31,12 @@ export default async function Home() {
                 <div className="flex flex-col items-center gap-4">
                     <GoogleButton />
 
-                    <a
+                    <Link
                         href="/auth/signup"
-                        className="text-sm text-muted-foreground hover:text-primary underline underline-offset-4"
+                        className="border border-slate-300 rounded px-5 py-4 flex items-center justify-center w-full hover:bg-slate-50 transition-colors"
                     >
-                        oder mit E-Mail registrieren
-                    </a>
+                        <span>oder mit E-Mail registrieren</span>
+                    </Link>
 
                     <p className="text-xs text-muted-foreground">
                         Kostenlos starten · Kein Credit-Card nötig
