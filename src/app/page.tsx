@@ -37,9 +37,9 @@ export default async function Home() {
         },
         {
             icon: Shield,
-            title: "Volle Kontrolle",
-            description: "Dein Store, deine Domain, deine Kunden. Keine Marktplatz-Abhängigkeit.",
-            stats: "100% Eigenständig",
+            title: "Freemium Modell",
+            description: "Starte kostenlos und upgraden wenn du wächst. Keine versteckten Kosten.",
+            stats: "Freemium",
         },
         {
             icon: Zap,
@@ -52,8 +52,8 @@ export default async function Home() {
     const benefits = [
         {
             icon: Globe,
-            title: "Eigene Domain",
-            description: "Verbinde deine eigene Domain für professionellen Auftritt",
+            title: "Eigener Store-Slug",
+            description: "Dein Store unter 3uck.store/dein-name – einzigartig & leicht merklich",
         },
         {
             icon: Box,
@@ -75,12 +75,12 @@ export default async function Home() {
     ];
 
     return (
-        <main className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-slate-50">
+        <main className="min-h-screen">
             {/* Navbar */}
             <nav className="container mx-auto px-6 py-4">
                 <div className="flex items-center justify-between">
                     <Link href="/" className="flex items-center gap-2">
-                        <Box className="w-8 h-8 text-primary" />
+                        <Box className="w-8 h-8" />
                         <span className="font-bold text-xl">3uck.store</span>
                     </Link>
                     <div className="flex items-center gap-4">
@@ -101,15 +101,15 @@ export default async function Home() {
                         {/* Content */}
                         <div className="space-y-8">
                             {/* Badge */}
-                            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium">
-                                <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border text-sm font-medium">
+                                <span className="w-2 h-2 rounded-full animate-pulse" />
                                 <span>3uck.store ist jetzt live</span>
                             </div>
 
                             {/* Headline */}
                             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-tight">
                                 Dein Store für
-                                <span className="block text-primary">
+                                <span className="block">
                                     3D-Modelle & Prints
                                 </span>
                             </h1>
@@ -135,15 +135,15 @@ export default async function Home() {
                             {/* Trust Badge */}
                             <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
                                 <div className="flex items-center gap-1">
-                                    <Check className="w-4 h-4 text-primary" />
+                                    <Check className="w-4 h-4" />
                                     <span>Kostenlos starten</span>
                                 </div>
                                 <div className="flex items-center gap-1">
-                                    <Check className="w-4 h-4 text-primary" />
+                                    <Check className="w-4 h-4" />
                                     <span>Keine Credit-Card</span>
                                 </div>
                                 <div className="flex items-center gap-1">
-                                    <Check className="w-4 h-4 text-primary" />
+                                    <Check className="w-4 h-4" />
                                     <span>Keine Gebühren</span>
                                 </div>
                             </div>
@@ -152,10 +152,10 @@ export default async function Home() {
                         {/* Visual - 3D Cube Icon */}
                         <div className="hidden lg:flex justify-center">
                             <div className="relative">
-                                <div className="absolute inset-0 bg-primary/10 rounded-2xl transform rotate-6" />
-                                <div className="relative bg-card border rounded-2xl p-12 shadow-2xl">
+                                <div className="absolute inset-0 border rounded-2xl transform rotate-6" />
+                                <div className="relative border rounded-2xl p-12">
                                     <div className="flex items-center justify-center">
-                                        <Box className="w-32 h-32 text-primary animate-pulse" />
+                                        <Box className="w-32 h-32 animate-pulse" />
                                     </div>
                                     <div className="mt-8 text-center">
                                         <p className="text-sm text-muted-foreground">
@@ -170,12 +170,12 @@ export default async function Home() {
             </section>
 
             {/* Stats Section */}
-            <section className="container mx-auto px-6 py-16 border-y bg-card/50">
+            <section className="container mx-auto px-6 py-16 border-y">
                 <div className="max-w-6xl mx-auto">
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
                         {stats.map((stat) => (
                             <div key={stat.label} className="text-center space-y-2">
-                                <div className="text-3xl md:text-4xl font-bold text-primary">
+                                <div className="text-3xl md:text-4xl font-bold">
                                     {stat.value}
                                 </div>
                                 <div className="text-sm text-muted-foreground">
@@ -205,20 +205,20 @@ export default async function Home() {
                             return (
                                 <div
                                     key={feature.title}
-                                    className="group relative border rounded-xl p-8 bg-card hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+                                    className="group relative border rounded-xl p-8 hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
                                 >
                                     <div className="flex items-start gap-4">
-                                        <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
-                                            <Icon className="w-7 h-7 text-primary" />
+                                        <div className="w-14 h-14 rounded-xl flex items-center justify-center flex-shrink-0">
+                                            <Icon className="w-7 h-7" />
                                         </div>
                                         <div className="flex-1">
-                                            <h3 className="font-bold text-lg mb-2 group-hover:text-primary transition-colors">
+                                            <h3 className="font-bold text-lg mb-2">
                                                 {feature.title}
                                             </h3>
                                             <p className="text-muted-foreground mb-4">
                                                 {feature.description}
                                             </p>
-                                            <div className="text-sm font-medium text-primary">
+                                            <div className="text-sm font-medium">
                                                 {feature.stats}
                                             </div>
                                         </div>
@@ -231,7 +231,7 @@ export default async function Home() {
             </section>
 
             {/* Benefits Section */}
-            <section className="container mx-auto px-6 py-16 bg-card/50">
+            <section className="container mx-auto px-6 py-16">
                 <div className="max-w-6xl mx-auto">
                     <div className="text-center mb-16">
                         <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
@@ -248,10 +248,10 @@ export default async function Home() {
                             return (
                                 <div
                                     key={benefit.title}
-                                    className="text-center space-y-4 p-6 rounded-xl border bg-card"
+                                    className="text-center space-y-4 p-6 rounded-xl border"
                                 >
-                                    <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto">
-                                        <Icon className="w-8 h-8 text-primary" />
+                                    <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto">
+                                        <Icon className="w-8 h-8" />
                                     </div>
                                     <h3 className="font-bold text-xl">
                                         {benefit.title}
@@ -269,18 +269,18 @@ export default async function Home() {
             {/* CTA Section */}
             <section className="container mx-auto px-6 py-16 md:py-24">
                 <div className="max-w-4xl mx-auto">
-                    <div className="relative overflow-hidden rounded-2xl bg-primary p-12 text-center text-primary-foreground">
+                    <div className="relative overflow-hidden rounded-2xl p-12 text-center">
                         {/* Decorative Pattern */}
                         <div className="absolute inset-0 opacity-10">
-                            <div className="absolute top-0 left-0 w-64 h-64 bg-primary-foreground rounded-full blur-3xl transform -translate-x-1/2 -translate-y-1/2" />
-                            <div className="absolute bottom-0 right-0 w-64 h-64 bg-primary-foreground rounded-full blur-3xl transform translate-x-1/2 translate-y-1/2" />
+                            <div className="absolute top-0 left-0 w-64 h-64 rounded-full blur-3xl transform -translate-x-1/2 -translate-y-1/2" />
+                            <div className="absolute bottom-0 right-0 w-64 h-64 rounded-full blur-3xl transform translate-x-1/2 translate-y-1/2" />
                         </div>
 
                         <div className="relative space-y-8">
                             <h2 className="text-3xl md:text-4xl font-bold">
                                 Bereit loszulegen?
                             </h2>
-                            <p className="text-lg opacity-90 max-w-2xl mx-auto">
+                            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
                                 Starte jetzt kostenlos und erstelle deinen
                                 professionellen 3D-Druck-Store in wenigen Minuten.
                             </p>
@@ -288,7 +288,6 @@ export default async function Home() {
                                 <Button
                                     asChild
                                     size="lg"
-                                    variant="secondary"
                                     className="w-full sm:w-auto"
                                 >
                                     <Link href="/auth/signup">
@@ -299,7 +298,7 @@ export default async function Home() {
                                 <Button
                                     asChild
                                     size="lg"
-                                    variant="secondary"
+                                    variant="outline"
                                     className="w-full sm:w-auto"
                                 >
                                     <Link href="/auth/signin">
@@ -318,7 +317,7 @@ export default async function Home() {
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
                         <div className="md:col-span-2">
                             <div className="flex items-center gap-2 mb-4">
-                                <Box className="w-6 h-6 text-primary" />
+                                <Box className="w-6 h-6" />
                                 <span className="font-bold text-lg">3uck.store</span>
                             </div>
                             <p className="text-muted-foreground max-w-sm">
@@ -330,17 +329,17 @@ export default async function Home() {
                             <h4 className="font-semibold mb-4">Produkt</h4>
                             <ul className="space-y-2 text-muted-foreground">
                                 <li>
-                                    <Link href="/features" className="hover:text-primary transition-colors">
+                                    <Link href="/features" className="hover:text-foreground transition-colors">
                                         Features
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="/pricing" className="hover:text-primary transition-colors">
+                                    <Link href="/pricing" className="hover:text-foreground transition-colors">
                                         Preise
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="/api" className="hover:text-primary transition-colors">
+                                    <Link href="/api" className="hover:text-foreground transition-colors">
                                         API
                                     </Link>
                                 </li>
@@ -350,17 +349,17 @@ export default async function Home() {
                             <h4 className="font-semibold mb-4">Rechtliches</h4>
                             <ul className="space-y-2 text-muted-foreground">
                                 <li>
-                                    <Link href="/privacy" className="hover:text-primary transition-colors">
+                                    <Link href="/privacy" className="hover:text-foreground transition-colors">
                                         Datenschutz
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="/terms" className="hover:text-primary transition-colors">
+                                    <Link href="/terms" className="hover:text-foreground transition-colors">
                                         AGB
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="/imprint" className="hover:text-primary transition-colors">
+                                    <Link href="/imprint" className="hover:text-foreground transition-colors">
                                         Impressum
                                     </Link>
                                 </li>
@@ -370,13 +369,13 @@ export default async function Home() {
                     <div className="pt-8 border-t flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
                         <p>© {new Date().getFullYear()} 3uck.store. Alle Rechte vorbehalten.</p>
                         <div className="flex items-center gap-4">
-                            <Link href="#" className="hover:text-primary transition-colors">
+                            <Link href="#" className="hover:text-foreground transition-colors">
                                 Twitter
                             </Link>
-                            <Link href="#" className="hover:text-primary transition-colors">
+                            <Link href="#" className="hover:text-foreground transition-colors">
                                 GitHub
                             </Link>
-                            <Link href="#" className="hover:text-primary transition-colors">
+                            <Link href="#" className="hover:text-foreground transition-colors">
                                 Discord
                             </Link>
                         </div>
