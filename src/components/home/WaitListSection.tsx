@@ -1,9 +1,14 @@
+"use clinet";
+
+import { useState } from "react";
+
 import {
     Mail,
     Rocket,
     ArrowRight,
     CheckCircle,
     AlertCircle,
+    Circle,
 } from "lucide-react";
 import {
     Card,
@@ -12,13 +17,13 @@ import {
     CardHeader,
     CardTitle,
 } from "../ui/card";
-import { useState } from "react";
 import { Button } from "../ui/button";
 
-import { createWaitlist } from "@/actions/waitlist/register-waitlist";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Textarea } from "../ui/textarea";
+
+import { createWaitlist } from "@/actions/waitlist/register-waitlist";
 
 export function WaitListSection() {
     const [waitlistForm, setWaitlistForm] = useState({
@@ -197,7 +202,7 @@ export function WaitListSection() {
                                     >
                                         {loading ? (
                                             <>
-                                                <Rocket className="w-4 h-4 mr-2 animate-spin" />
+                                                <Circle className="w-4 h-4 mr-2 animate-spin" />
                                                 Anmelden...
                                             </>
                                         ) : (
