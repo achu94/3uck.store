@@ -62,7 +62,7 @@ export default function Home() {
 
     const roadmap = [
         {
-            phase: "Q1 2025",
+            phase: "Q1",
             title: "Foundation",
             period: "Jan - Mär",
             status: "in-progress",
@@ -78,7 +78,7 @@ export default function Home() {
             ],
         },
         {
-            phase: "Q2 2025",
+            phase: "Q2",
             title: "Payment & Orders",
             period: "Apr - Jun",
             status: "planned",
@@ -93,7 +93,7 @@ export default function Home() {
             ],
         },
         {
-            phase: "Q3 2025",
+            phase: "Q3",
             title: "STL Sales & Revenue",
             period: "Jul - Sep",
             status: "planned",
@@ -107,7 +107,7 @@ export default function Home() {
             ],
         },
         {
-            phase: "Q4 2025",
+            phase: "Q4",
             title: "Marketplace",
             period: "Okt - Dez",
             status: "planned",
@@ -202,7 +202,7 @@ export default function Home() {
     };
 
     return (
-        <main className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-slate-50">
+        <main className="min-h-screen max-w-6xl mx-auto">
             {/* Banner */}
             <div className="border-b bg-primary text-primary-foreground">
                 <div className="container mx-auto px-6 py-3">
@@ -239,8 +239,8 @@ export default function Home() {
             </nav>
 
             {/* Hero Section */}
-            <section className="container mx-auto px-6 py-16 md:py-24">
-                <div className="max-w-6xl mx-auto text-center">
+            <section className="container mx-auto px-6 py-16">
+                <div className="mx-auto text-center">
                     {/* Badge */}
                     <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-8">
                         <Sparkles className="w-4 h-4" />
@@ -256,7 +256,7 @@ export default function Home() {
                     </h1>
 
                     {/* Subline */}
-                    <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-8">
+                    <p className="text-xl md:text-2xl text-muted-foreground mx-auto mb-8">
                         Wir entwickeln 3uck.store – eine moderne Plattform für
                         3D-Designer und 3D-Drucker. Melde dich an und werde Teil der ersten Welle!
                     </p>
@@ -295,7 +295,7 @@ export default function Home() {
 
             {/* Features Preview */}
             <section className="container mx-auto px-6 py-16 bg-muted/30">
-                <div className="max-w-6xl mx-auto">
+                <div className="mx-auto">
                     <div className="text-center mb-12">
                         <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
                             Was kommt?
@@ -333,8 +333,8 @@ export default function Home() {
             </section>
 
             {/* Benefits */}
-            <section className="container mx-auto px-6 py-16">
-                <div className="max-w-6xl mx-auto">
+            <section className="container mx-auto py-16">
+                <div className="mx-auto">
                     <div className="text-center mb-12">
                         <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
                             Für wen?
@@ -368,8 +368,8 @@ export default function Home() {
             </section>
 
             {/* Roadmap */}
-            <section id="roadmap" className="container mx-auto px-6 py-16 md:py-24 bg-muted/30">
-                <div className="max-w-6xl mx-auto">
+            <section id="roadmap" className="container mx-auto py-16">
+                <div className="mx-auto">
                     <div className="text-center mb-12">
                         <div className="inline-flex items-center gap-2 mb-4">
                             <Calendar className="w-6 h-6" />
@@ -434,21 +434,21 @@ export default function Home() {
             </section>
 
             {/* 3D-Designer & 3D-Drucker CTA */}
-            <section className="container mx-auto px-6 py-16 md:py-24 bg-primary text-primary-foreground">
-                <div className="max-w-4xl mx-auto text-center">
+            <section className="container mx-auto py-16">
+                <div className="mx-auto text-center bg-card p-8">
                     <div className="inline-flex items-center gap-2 mb-6">
                         <Lightbulb className="w-8 h-8" />
                         <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
                             3D-Designer & 3D-Drucker gesucht!
                         </h2>
                     </div>
-                    <p className="text-xl opacity-90 max-w-2xl mx-auto mb-8">
+                    <p className="text-xl opacity-90 mx-auto mb-8">
                         Wir suchen motivierte 3D-Designer, die ihre Modelle verkaufen wollen,
                         und 3D-Drucker, die Druckaufträge annehmen. Melde dich an und werde Teil der ersten Welle!
                     </p>
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                         <Button size="lg" variant="secondary" className="w-full sm:w-auto">
-                            <Link href="#waitlist">
+                            <Link href="#waitlist" className="flex items-center">
                                 Interesse anmelden
                                 <ArrowRight className="ml-2 w-4 h-4" />
                             </Link>
@@ -458,7 +458,7 @@ export default function Home() {
                             variant="outline"
                             className="w-full sm:w-auto bg-transparent border-white hover:bg-white/10"
                         >
-                            <Link href="mailto:hello@3uck.store">
+                            <Link href="mailto:hello@3uck.store" className="flex items-center">
                                 Kontakt aufnehmen
                                 <Mail className="ml-2 w-4 h-4" />
                             </Link>
@@ -468,8 +468,8 @@ export default function Home() {
             </section>
 
             {/* Waitlist Form */}
-            <section id="waitlist" className="container mx-auto px-6 py-16">
-                <div className="max-w-2xl mx-auto">
+            {/* <section id="waitlist" className="container mx-auto py-16">
+                <div>
                     <Card className="border-2 border-primary/20">
                         <CardHeader className="text-center pb-6">
                             <div className="flex items-center justify-center gap-3 mb-4">
@@ -586,11 +586,11 @@ export default function Home() {
                         </CardContent>
                     </Card>
                 </div>
-            </section>
+            </section> */}
 
             {/* Footer */}
             <footer className="container mx-auto px-6 py-12 border-t bg-muted/30">
-                <div className="max-w-6xl mx-auto">
+                <div className="mx-auto">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
                         <div>
                             <div className="flex items-center gap-2 mb-4">
