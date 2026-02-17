@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { Box, Mail } from "lucide-react";
+import { Mail } from "lucide-react";
+import { LogoIcon } from "../ui/LogoIcon";
 
 export function FooterSection() {
     return (
@@ -10,10 +11,10 @@ export function FooterSection() {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
                     <div>
                         <div className="flex items-center gap-2 mb-4">
-                            <Box className="w-6 h-6" />
-                            <span className="font-bold text-lg">
-                                3uck.store
-                            </span>
+                            <LogoIcon size="2xl" />
+                            <p className="text-sm text-muted-foreground mt-2">
+                                hello@3uck.store
+                            </p>
                         </div>
                         <p className="text-muted-foreground max-w-sm">
                             Deine Plattform für 3D-Designer und 3D-Drucker. Noch
@@ -54,7 +55,7 @@ export function FooterSection() {
                         <ul className="space-y-2 text-muted-foreground">
                             <li>
                                 <Link
-                                    href="#"
+                                    href="/datenschutz"
                                     className="hover:text-foreground transition-colors"
                                 >
                                     Datenschutz
@@ -62,15 +63,7 @@ export function FooterSection() {
                             </li>
                             <li>
                                 <Link
-                                    href="#"
-                                    className="hover:text-foreground transition-colors"
-                                >
-                                    AGB
-                                </Link>
-                            </li>
-                            <li>
-                                <Link
-                                    href="#"
+                                    href="/impressum"
                                     className="hover:text-foreground transition-colors"
                                 >
                                     Impressum

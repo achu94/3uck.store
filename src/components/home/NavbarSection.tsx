@@ -1,16 +1,16 @@
 "use client";
 
-import { Box } from "lucide-react";
 import Link from "next/link";
 import { Button } from "../ui/button";
+
+import { LogoIcon } from "../ui/LogoIcon";
 
 export function NavbarSection() {
     return (
         <nav className="container mx-auto px-6 py-4">
             <div className="flex items-center justify-between">
                 <Link href="/" className="flex items-center gap-2">
-                    <Box className="w-8 h-8" />
-                    <span className="font-bold text-xl">3uck.store</span>
+                    <LogoIcon size="2xl" />
                 </Link>
                 <div className="flex items-center gap-4">
                     <Button asChild variant="ghost">
