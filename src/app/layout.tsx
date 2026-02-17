@@ -70,6 +70,11 @@ export const metadata = {
     },
 
     metadataBase: new URL("https://3uck.store"),
+
+    robots: {
+        index: false,
+        follow: false,
+    },
 };
 
 export const viewport = {
