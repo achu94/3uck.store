@@ -32,7 +32,7 @@ export default function Home() {
             <RoadMapSection />
 
             {/* 3D-Designer & 3D-Drucker CTA */}
-            <CtaSection />
+            {/* <CtaSection /> */}
 
             {/* Waitlist Form */}
             <WaitListSection />
