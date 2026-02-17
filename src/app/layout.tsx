@@ -68,6 +68,8 @@ export const metadata = {
         shortcut: "/favicon-16x16.png",
         apple: "/apple-touch-icon.png",
     },
+
+    metadataBase: new URL("https://3uck.store"),
 };
 
 export const viewport = {
