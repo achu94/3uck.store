@@ -101,7 +101,7 @@ export function StoreManager({ store }: StoreManagerProps) {
     ];
 
     return (
-        <div className="min-h-screen bg-muted">
+        <div className="min-h-screen">
             <div className="mx-auto w-full max-w-6xl p-4 sm:p-6 space-y-6">
                 {/* ✅ STORE HEADER */}
                 <Card className="overflow-hidden">

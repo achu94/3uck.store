@@ -11,6 +11,7 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
     SidebarRail,
+    SidebarTrigger,
 } from "@/components/ui/sidebar";
 
 import {
@@ -42,10 +43,18 @@ export function AppSidebar() {
     );
 
     return (
-        <Sidebar collapsible="icon" variant="inset">
+        <Sidebar collapsible="icon" variant="floating">
             <SidebarHeader>
                 {/* <SidebarGroup> */}
                 <SidebarContent>
+                    <SidebarMenu>
+                        <SidebarTrigger />
+                    </SidebarMenu>
+                </SidebarContent>
+                {/* </SidebarGroup> */}
+            </SidebarHeader>
+            <SidebarContent>
+                <SidebarGroup>
                     <SidebarMenu>
                         {GenerateSidebarMenuItem(
                             "Store Manager",
@@ -54,11 +63,6 @@ export function AppSidebar() {
                             "/store",
                         )}
                     </SidebarMenu>
-                </SidebarContent>
-                {/* </SidebarGroup> */}
-            </SidebarHeader>
-            <SidebarContent>
-                <SidebarGroup>
                     <SidebarMenu>
                         {GenerateSidebarMenuItem(
                             "Start",

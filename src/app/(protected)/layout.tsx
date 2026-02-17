@@ -1,7 +1,7 @@
 import {
     SidebarInset,
     SidebarProvider,
-    SidebarTrigger,
+    MobileSidebarTrigger,
 } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar/app-sidebar";
 
@@ -16,16 +16,13 @@ export default async function ProtectedLayout({
     children: React.ReactNode;
 }) {
     return (
-        <SidebarProvider>
-            <div className="flex min-h-svh w-full">
+        <SidebarProvider defaultOpen={false}>
+            <div className="flex min-h-screen w-full">
                 <AppSidebar />
 
-                <SidebarInset className="flex-1">
-                    <header className="flex h-16 items-center gap-2 px-4">
-                        <SidebarTrigger />
-                    </header>
-
-                    <main className="p-4">{children}</main>
+                <SidebarInset className="flex flex-1 flex-col">
+                    <MobileSidebarTrigger />
+                    <main className="flex-1 p-4">{children}</main>
                 </SidebarInset>
             </div>
         </SidebarProvider>

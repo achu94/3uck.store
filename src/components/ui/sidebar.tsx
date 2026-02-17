@@ -3,7 +3,7 @@
 import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
-import { PanelLeft } from "lucide-react";
+import { PanelLeftOpen, PanelLeftClose } from "lucide-react";
 
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
@@ -89,7 +89,7 @@ const SidebarProvider = React.forwardRef<
                 } else {
                     _setOpen(openState);
                 }
-
+                console.log(document.cookie);
                 // This sets the cookie to keep the sidebar state.
                 document.cookie = `${SIDEBAR_COOKIE_NAME}=${openState}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`;
             },
@@ -290,7 +290,9 @@ const SidebarTrigger = React.forwardRef<
     React.ElementRef<typeof Button>,
     React.ComponentProps<typeof Button>
 >(({ className, onClick, ...props }, ref) => {
-    const { toggleSidebar } = useSidebar();
+    const { toggleSidebar, state } = useSidebar();
+
+    const isCollapsed = state === "collapsed";
 
     return (
         <Button
@@ -305,12 +307,27 @@ const SidebarTrigger = React.forwardRef<
             }}
             {...props}
         >
-            <PanelLeft />
+            {isCollapsed ? <PanelLeftOpen /> : <PanelLeftClose />}
             <span className="sr-only">Toggle Sidebar</span>
         </Button>
     );
 });
 SidebarTrigger.displayName = "SidebarTrigger";
+
+export function MobileSidebarTrigger() {
+    const { isMobile, state } = useSidebar();
+
+    if (!isMobile || state === "expanded") return null;
+
+    return (
+        // <header className="flex h-12 items-center border-b px-4">
+        <div className="flex h-12 items-center border-b px-4">
+            <SidebarTrigger />
+        </div>
+        // </header>
+    );
+}
+SidebarTrigger.displayName = "MobileSidebarTrigger";
 
 const SidebarRail = React.forwardRef<
     HTMLButtonElement,
