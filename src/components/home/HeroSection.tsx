@@ -5,6 +5,8 @@ import Link from "next/link";
 import { Check, Sparkles } from "lucide-react";
 import { Button } from "../ui/button";
 
+import GoogleButton from "../buttons/GoogleButton";
+
 export function HeroSection() {
     return (
         <section className="container mx-auto px-6 py-16">
@@ -31,22 +33,17 @@ export function HeroSection() {
                 </p>
 
                 {/* CTA Buttons */}
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-4 max-w-md mx-auto mb-8">
-                    <Button size="lg" className="w-full sm:w-auto">
-                        <Link href="#waitlist">Interessiert?</Link>
-                    </Button>
-                    <Button
-                        size="lg"
-                        variant="outline"
-                        className="w-full sm:w-auto"
-                    >
-                        <Link
-                            href="https://dev.3uck.store"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            Zu Dev →
-                        </Link>
+                <div className="flex flex-col items-center justify-center gap-4 max-w-md mx-auto mb-8 w-full">
+                    <GoogleButton className="w-full" />
+
+                    <div className="flex items-center w-full gap-3 text-sm text-muted-foreground">
+                        <div className="flex-1 h-px bg-border" />
+                        <span>oder</span>
+                        <div className="flex-1 h-px bg-border" />
+                    </div>
+
+                    <Button asChild className="w-full">
+                        <Link href="/auth/signup">Mit E-Mail registrieren</Link>
                     </Button>
                 </div>
 

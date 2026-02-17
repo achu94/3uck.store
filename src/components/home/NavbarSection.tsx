@@ -13,17 +13,8 @@ export function NavbarSection() {
                     <LogoIcon size="2xl" />
                 </Link>
                 <div className="flex items-center gap-4">
-                    <Button asChild variant="ghost">
-                        <Link
-                            href="https://dev.3uck.store"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            Dev
-                        </Link>
-                    </Button>
                     <Button asChild>
-                        <Link href="#waitlist">Interesse anmelden</Link>
+                        <Link href="/auth/signup">Loslegen</Link>
                     </Button>
                 </div>
             </div>

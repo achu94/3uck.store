@@ -17,7 +17,7 @@ export default function GoogleButton({
 
     const handleClick = async () => {
         setLoading(true);
-        await signIn("google");
+        await signIn("google", { redirectTo: "/dashboard" });
     };
 
     return (

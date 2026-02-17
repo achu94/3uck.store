@@ -2,8 +2,6 @@
 
 import { AlertCircle } from "lucide-react";
 
-import Link from "next/link";
-
 export type BannerSectionProps = {
     show: boolean;
 };
@@ -20,14 +18,6 @@ export function BannerSection({ show }: BannerSectionProps) {
                         In Entwicklung – Wir arbeiten mit Hochdruck an
                         3uck.store!
                     </span>
-                    <Link
-                        href="https://dev.3uck.store"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="ml-2 hover:underline font-semibold"
-                    >
-                        Zu dev.3uck.store →
-                    </Link>
                 </div>
             </div>
         </div>
