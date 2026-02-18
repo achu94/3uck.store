@@ -101,6 +101,16 @@ export async function createStore(
         };
     }
 
+    // Default Category wird angelegt
+    await supabaseServer().from("categories").insert({
+        store_id: store.id,
+        name: "Home",
+        slug: "home",
+        description: "Default Home Category",
+        is_active: true,
+        sort_order: 1,
+    });
+
     revalidatePath("/store");
     redirect(`/store`);
 }

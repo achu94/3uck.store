@@ -20,7 +20,6 @@ export type CreateCategoryState = {
 };
 
 export async function createCategory(
-    prevState: CreateCategoryState,
     formData: FormData,
 ): Promise<CreateCategoryState> {
     const session = await auth();
