@@ -66,7 +66,7 @@ export function NewStore() {
 
             {/* LOGO */}
             <div className="flex flex-col md:flex-row gap-4 items-center">
-                <div className="w-full md:w-1/6">
+                <div className="w-full max-w-51">
                     <ImageUploadPreview
                         label="Shopbild auswählen"
                         aspect="square"
