@@ -1,23 +1,11 @@
+import { Database, Tables } from "@/types/supabase";
+
 export const STORE_TYPES = ["print", "model"] as const;
 export type StoreType = (typeof STORE_TYPES)[number];
 
-export type StoreDataBase = {
-    id: number;
-    uuid: string;
-    user_id: number;
-    name: string;
-    slug: string;
-    description: string;
-    logo_url: string;
-    contact_email: string;
-    is_aktiv: boolean;
-    type: StoreType;
-    created_at: Date;
-    updated_at: Date;
-};
+export type StoreDataBase = Tables<"stores">;
 
 type StoreSystemFields = "id" | "uuid" | "created_at" | "updated_at";
-
 type StoreImmutableFields = "name" | "slug";
 
 type StoreEditableFields = Omit<
@@ -26,15 +14,11 @@ type StoreEditableFields = Omit<
 >;
 
 export type StoreCreateInput = Omit<
-    StoreDataBase,
-    StoreSystemFields | "is_aktiv"
+    Database["public"]["Tables"]["stores"]["Insert"],
+    StoreSystemFields | "is_active"
 >;
 
 export type StoreUpdateInput = Pick<StoreDataBase, "id"> &
     Partial<StoreEditableFields>;
-
-export type StoreSoftDeleteInput = {
-    id: StoreDataBase["id"];
-};
 
 export type StoreSoftDeleteResponse = StoreDataBase;

@@ -58,6 +58,107 @@ export type Database = {
           },
         ]
       }
+      product_images: {
+        Row: {
+          alt_text: string | null
+          created_at: string
+          id: number
+          product_id: number
+          sort_order: number | null
+          url: string
+        }
+        Insert: {
+          alt_text?: string | null
+          created_at?: string
+          id?: number
+          product_id: number
+          sort_order?: number | null
+          url: string
+        }
+        Update: {
+          alt_text?: string | null
+          created_at?: string
+          id?: number
+          product_id?: number
+          sort_order?: number | null
+          url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "product_images_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      products: {
+        Row: {
+          available_colors: string[] | null
+          available_sizes: string[] | null
+          average_rating: number | null
+          category_id: number | null
+          created_at: string
+          description: string | null
+          id: number
+          is_active: boolean | null
+          price: number
+          sales_count: number | null
+          slug: string
+          store_id: number
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          available_colors?: string[] | null
+          available_sizes?: string[] | null
+          average_rating?: number | null
+          category_id?: number | null
+          created_at?: string
+          description?: string | null
+          id?: number
+          is_active?: boolean | null
+          price?: number
+          sales_count?: number | null
+          slug: string
+          store_id: number
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          available_colors?: string[] | null
+          available_sizes?: string[] | null
+          average_rating?: number | null
+          category_id?: number | null
+          created_at?: string
+          description?: string | null
+          id?: number
+          is_active?: boolean | null
+          price?: number
+          sales_count?: number | null
+          slug?: string
+          store_id?: number
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "products_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "products_store_id_fkey"
+            columns: ["store_id"]
+            isOneToOne: false
+            referencedRelation: "stores"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       stores: {
         Row: {
           contact_email: string | null
@@ -147,6 +248,33 @@ export type Database = {
           provider?: string
           provider_id?: string | null
           updated_at?: string | null
+        }
+        Relationships: []
+      }
+      waitlist: {
+        Row: {
+          created_at: string
+          email: string
+          id: number
+          interest: string
+          message: string
+          name: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: number
+          interest: string
+          message: string
+          name: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: number
+          interest?: string
+          message?: string
+          name?: string
         }
         Relationships: []
       }
