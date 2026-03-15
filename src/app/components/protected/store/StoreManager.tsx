@@ -4,7 +4,7 @@ import type { Store } from "@/types/db";
 import { redirect } from "next/navigation";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 
@@ -18,7 +18,8 @@ import {
     Sparkles,
 } from "lucide-react";
 
-import { getAssetsUrl } from "@/lib/utils";
+import { cn, getAssetsUrl } from "@/lib/utils";
+import Link from "next/link";
 
 type StoreManagerProps = {
     store: Store | null;
@@ -42,7 +43,7 @@ type CategoryPlaceholder = {
 
 export function StoreManager({ store }: StoreManagerProps) {
     if (!store) redirect("/store/create");
-    
+
     const storeAssetUrl = getAssetsUrl("STORE");
 
     const storeInitial = (store.name?.[0] ?? "S").toUpperCase();
@@ -260,14 +261,19 @@ export function StoreManager({ store }: StoreManagerProps) {
                                     </CardTitle>
 
                                     {/* Owner Action */}
-                                    <Button
-                                        size="sm"
-                                        variant="outline"
-                                        className="gap-2"
+                                    <Link
+                                        href="/dashboard/products/new"
+                                        className={cn(
+                                            buttonVariants({
+                                                variant: "outline",
+                                                size: "sm",
+                                            }),
+                                            "gap-2",
+                                        )}
                                     >
                                         <Plus className="h-4 w-4" />
-                                        Item hinzufügen
-                                    </Button>
+                                        Product hinzufügen
+                                    </Link>
                                 </div>
                             </CardHeader>
 

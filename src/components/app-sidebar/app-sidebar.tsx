@@ -81,10 +81,10 @@ export function AppSidebar() {
                     </SidebarMenu>
                     <SidebarMenu>
                         {GenerateSidebarMenuItem(
-                            "Artikels",
-                            "Go to items",
+                            "Products",
+                            "Go to products",
                             Package,
-                            "/dashboard/item",
+                            "/dashboard/products",
                         )}
                     </SidebarMenu>
                 </SidebarGroup>
