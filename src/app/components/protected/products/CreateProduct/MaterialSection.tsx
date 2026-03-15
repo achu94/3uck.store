@@ -1,49 +1,58 @@
-import { Badge } from "@/components/ui/badge";
+// src/app/components/protected/products/CreateProduct/MaterialSection.tsx
+"use client";
+
 import { Label } from "@/components/ui/label";
-import { Box } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
 interface MaterialSectionProps {
     selected: string[];
-    onChange: (materials: string[]) => void;
+    error?: string;
+    onChange: (mats: string[]) => void;
 }
 
-export function MaterialSection({ selected, onChange }: MaterialSectionProps) {
-    const materials = ["PLA", "PETG", "ABS", "ASA", "TPU (Flex)", "Carbon"];
+const MATERIALS = ["PLA", "PETG", "ABS", "ASA", "TPU (Flex)", "Carbon"];
 
-    const toggleMaterial = (mat: string) => {
-        const newSelection = selected.includes(mat)
-            ? selected.filter((m) => m !== mat)
-            : [...selected, mat];
-        onChange(newSelection);
+export function MaterialSection({
+    selected,
+    error,
+    onChange,
+}: MaterialSectionProps) {
+    const toggle = (m: string) => {
+        const next = selected.includes(m)
+            ? selected.filter((x) => x !== m)
+            : [...selected, m];
+        onChange(next);
     };
 
     return (
-        <div className="space-y-4 pt-4 border-t border-dashed">
+        <div className="space-y-3">
             <div className="flex items-center justify-between">
-                <Label className="text-sm font-semibold flex items-center gap-2">
-                    <Box className="h-4 w-4 text-primary" /> Material
+                <Label className={error ? "text-destructive" : ""}>
+                    Material (Filament)
                 </Label>
-                <Badge variant="secondary" className="text-[10px] uppercase">
-                    Multiple
+                <Badge variant="outline" className="text-[10px] font-bold">
+                    MULTIPLE
                 </Badge>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                {materials.map((mat) => (
-                    <div
-                        key={mat}
-                        onClick={() => toggleMaterial(mat)}
+                {MATERIALS.map((m) => (
+                    <button
+                        key={m}
+                        type="button"
+                        onClick={() => toggle(m)}
                         className={cn(
-                            "py-2.5 px-3 rounded-lg border text-xs font-medium text-center cursor-pointer transition-all",
-                            selected.includes(mat)
-                                ? "border-primary bg-primary/5 text-primary shadow-sm"
-                                : "bg-background hover:border-muted-foreground/30 text-muted-foreground",
+                            "h-10 text-xs font-medium border rounded-md transition-all",
+                            selected.includes(m)
+                                ? "bg-primary text-primary-foreground border-primary"
+                                : "bg-background border-input hover:bg-muted",
                         )}
                     >
-                        {mat}
-                    </div>
+                        {m}
+                    </button>
                 ))}
             </div>
+            {error && <p className="text-xs text-destructive">{error}</p>}
         </div>
     );
 }

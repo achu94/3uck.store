@@ -63,7 +63,7 @@ export type Database = {
           alt_text: string | null
           created_at: string
           id: number
-          product_id: number
+          product_id: string
           sort_order: number | null
           url: string
         }
@@ -71,7 +71,7 @@ export type Database = {
           alt_text?: string | null
           created_at?: string
           id?: number
-          product_id: number
+          product_id: string
           sort_order?: number | null
           url: string
         }
@@ -79,7 +79,7 @@ export type Database = {
           alt_text?: string | null
           created_at?: string
           id?: number
-          product_id?: number
+          product_id?: string
           sort_order?: number | null
           url?: string
         }
@@ -96,48 +96,57 @@ export type Database = {
       products: {
         Row: {
           available_colors: string[] | null
+          available_materials: string[] | null
           available_sizes: string[] | null
           average_rating: number | null
           category_id: number | null
           created_at: string
           description: string | null
-          id: number
+          id: string
           is_active: boolean | null
+          main_image_url: string | null
           price: number
           sales_count: number | null
           slug: string
+          status: Database["public"]["Enums"]["product_status"] | null
           store_id: number
           title: string
           updated_at: string
         }
         Insert: {
           available_colors?: string[] | null
+          available_materials?: string[] | null
           available_sizes?: string[] | null
           average_rating?: number | null
           category_id?: number | null
           created_at?: string
           description?: string | null
-          id?: number
+          id?: string
           is_active?: boolean | null
+          main_image_url?: string | null
           price?: number
           sales_count?: number | null
           slug: string
+          status?: Database["public"]["Enums"]["product_status"] | null
           store_id: number
           title: string
           updated_at?: string
         }
         Update: {
           available_colors?: string[] | null
+          available_materials?: string[] | null
           available_sizes?: string[] | null
           average_rating?: number | null
           category_id?: number | null
           created_at?: string
           description?: string | null
-          id?: number
+          id?: string
           is_active?: boolean | null
+          main_image_url?: string | null
           price?: number
           sales_count?: number | null
           slug?: string
+          status?: Database["public"]["Enums"]["product_status"] | null
           store_id?: number
           title?: string
           updated_at?: string
@@ -286,7 +295,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      product_status: "draft" | "published" | "archived"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -413,6 +422,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      product_status: ["draft", "published", "archived"],
+    },
   },
 } as const

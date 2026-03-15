@@ -1,5 +1,8 @@
-import { CreateProduct } from "@/app/components/protected/products/CreateProduct/CreateProduct";
+import { createEmptyDraft } from "@/actions/products/create-empty-draft";
+import { redirect } from "next/navigation";
 
 export default async function Page() {
-    return <CreateProduct />;
+    const initialProduct = await createEmptyDraft();
+
+    redirect(`/dashboard/products/${initialProduct.id}`);
 }
