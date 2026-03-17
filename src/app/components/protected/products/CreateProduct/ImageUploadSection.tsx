@@ -90,6 +90,7 @@ export function ImageUploadSection({
                             src={`${itemsAssetUrl}/${previewUrl}`}
                             alt="Vorschau"
                             fill
+                            unoptimized
                             className="object-cover transition-transform group-hover:scale-[1.02]"
                         />
                         <button
