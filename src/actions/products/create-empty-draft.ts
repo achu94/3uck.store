@@ -3,10 +3,9 @@
 
 import { auth } from "@/lib/auth";
 import { supabaseServer } from "@/lib/supabaseServer";
-import { productBaseSchema } from "@/schemas/product.schema";
-import { Tables } from "@/types/supabase";
+import { productBaseSchema, type ProductRow } from "@/schemas/product.schema";
 
-export async function createEmptyDraft(): Promise<Tables<"products">> {
+export async function createEmptyDraft(): Promise<Pick<ProductRow, "id">> {
     const session = await auth();
     if (!session?.user?.id) throw new Error("Unauthorized");
 
@@ -22,11 +21,13 @@ export async function createEmptyDraft(): Promise<Tables<"products">> {
     if (!store) throw new Error("Store not found");
 
     const partialData = productBaseSchema.parse({
-        id: crypto.randomUUID(), // Temporäre ID, falls nötig, oder DB generiert sie
+        id: crypto.randomUUID(),
     });
 
+    const { product_images, ...rest } = partialData;
+
     const draftData = {
-        ...partialData,
+        ...rest,
         store_id: store.id,
         slug: `draft-${crypto.randomUUID()}`, // Pflichtfeld in deiner DB
     };
@@ -39,5 +40,6 @@ export async function createEmptyDraft(): Promise<Tables<"products">> {
         .single();
 
     if (error) throw new Error(error.message);
-    return data;
+
+    return { id: data.id };
 }
