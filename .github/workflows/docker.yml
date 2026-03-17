@@ -31,6 +31,9 @@ jobs:
                 build-args: |
                   NEXT_PUBLIC_SUPABASE_URL=${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
                   NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY=${{ secrets.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY }}
+                  NEXT_PUBLIC_USER_ASSET_URL=${{ secrets.NEXT_PUBLIC_USER_ASSET_URL }}
+                  NEXT_PUBLIC_STORE_ASSET_URL=${{ secrets.NEXT_PUBLIC_STORE_ASSET_URL }}
+                  NEXT_PUBLIC_ITEMS_ASSET_URL=${{ secrets.NEXT_PUBLIC_ITEMS_ASSET_URL }}
                   NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }}
                   NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }}
                   AUTH_GOOGLE_ID=${{ secrets.AUTH_GOOGLE_ID }}
