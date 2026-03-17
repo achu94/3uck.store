@@ -16,11 +16,13 @@ export async function uploadImage({
     bucket,
     prefix,
     width,
+    fileName,
 }: {
     file: File;
     bucket: string;
     prefix: string;
     width?: number;
+    fileName?: string;
 }) {
     const buffer = Buffer.from(await file.arrayBuffer());
 
@@ -32,7 +34,8 @@ export async function uploadImage({
 
     const webpBuffer = await image.webp({ quality: 85 }).toBuffer();
 
-    const key = `${prefix}/${randomUUID()}.webp`;
+    const finalFileName = fileName || `${randomUUID()}.webp`;
+    const key = `${prefix}/${finalFileName}`;
 
     await s3.send(
         new PutObjectCommand({

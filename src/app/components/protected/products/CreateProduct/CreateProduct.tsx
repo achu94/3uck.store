@@ -20,6 +20,7 @@ import { DescriptionSection } from "./DescriptionSection";
 // Actions & Types
 import { ProductRow, UpdateProductInput } from "@/schemas/product.schema";
 import { updateProduct } from "@/actions/products/update-product";
+import { Label } from "@/components/ui/label";
 
 interface CreateProductProps {
     initialProduct: ProductRow;
@@ -36,6 +37,7 @@ export function CreateProduct({ initialProduct }: CreateProductProps) {
         price: initialProduct.price || 0,
         description: initialProduct.description || "",
         main_image_url: initialProduct.main_image_url || null,
+        product_images: initialProduct.product_images || [],
         available_materials: initialProduct.available_materials || [],
         available_colors: initialProduct.available_colors || [],
         available_sizes: initialProduct.available_sizes || [],
@@ -49,6 +51,7 @@ export function CreateProduct({ initialProduct }: CreateProductProps) {
             const payload = {
                 ...formData,
                 status: shouldBeDraft ? "draft" : "published",
+                product_images: []
             };
 
             const result = await updateProduct(initialProduct.id, payload);
@@ -95,6 +98,7 @@ export function CreateProduct({ initialProduct }: CreateProductProps) {
                                 <ImageUploadSection
                                     productId={initialProduct.id}
                                     initialImage={formData.main_image_url}
+                                    isMain={true}
                                     onUploadSuccess={(url) =>
                                         setFormData((prev) => ({
                                             ...prev,
@@ -102,6 +106,56 @@ export function CreateProduct({ initialProduct }: CreateProductProps) {
                                         }))
                                     }
                                 />
+
+                                <div className="mt-6 space-y-2">
+                                    <Label className="text-sm font-medium text-muted-foreground uppercase tracking-wider">
+                                        Weitere Bilder (Galerie)
+                                    </Label>
+
+                                    <div className="grid grid-cols-4 gap-2">
+                                        {[0, 1, 2, 3].map((idx) => (
+                                            <ImageUploadSection
+                                                key={idx}
+                                                productId={initialProduct.id}
+                                                slotIndex={idx}
+                                                isMain={false}
+                                                initialImage={
+                                                    formData.product_images?.find(
+                                                        (img) =>
+                                                            img.sort_order ===
+                                                            idx,
+                                                    )?.url
+                                                }
+                                                onUploadSuccess={(newUrl) => {
+                                                    setFormData((prev) => {
+                                                        const otherImages =
+                                                            prev.product_images.filter(
+                                                                (img) =>
+                                                                    img.sort_order !==
+                                                                    idx,
+                                                            );
+
+                                                        return {
+                                                            ...prev,
+                                                            product_images: [
+                                                                ...otherImages,
+                                                                {
+                                                                    url: newUrl as string,
+                                                                    sort_order:
+                                                                        idx,
+                                                                },
+                                                            ].sort(
+                                                                (a, b) =>
+                                                                    a.sort_order -
+                                                                    b.sort_order,
+                                                            ),
+                                                        };
+                                                    });
+                                                }}
+                                            />
+                                        ))}
+                                    </div>
+                                </div>
                             </CardContent>
                         </Card>
                     </div>
