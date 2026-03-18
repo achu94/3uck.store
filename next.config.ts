@@ -5,20 +5,20 @@ const nextConfig: NextConfig = {
     images: {
         remotePatterns: [
             {
-                protocol: 'https',
-                hostname: 'lh3.googleusercontent.com',
+                protocol: "https",
+                hostname: "lh3.googleusercontent.com",
             },
             {
-                protocol: 'https',
-                hostname: 'avatars.githubusercontent.com',
+                protocol: "https",
+                hostname: "avatars.githubusercontent.com",
             },
             {
-                protocol: 'https',
-                hostname: 'cdn.auth0.com',
+                protocol: "https",
+                hostname: "cdn.auth0.com",
             },
             {
-                protocol: 'https',
-                hostname: '3uck-item-assets.hel1.your-objectstorage.com',
+                protocol: "https",
+                hostname: "3uck-item-assets.hel1.your-objectstorage.com",
             },
         ],
     },
@@ -26,6 +26,14 @@ const nextConfig: NextConfig = {
         serverActions: {
             bodySizeLimit: "10mb",
         },
+    },
+    async rewrites() {
+        return [
+            {
+                source: "/stats/:path*",
+                destination: "https://cloud.umami.is/:path*",
+            },
+        ];
     },
 };
 
