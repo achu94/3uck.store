@@ -28,7 +28,7 @@ Kostenlos. Ohne Gebühren. Deine Kontrolle.
 - **Categories** – Organisiere deine Produkte
 - **Orders** – Order Management, History, Tracking
 - **Freemium** – Kostenlos starten, später upgraden
-- **Revenue Share** – 100% Einnahmen für STL Sales
+- **Revenue Share** – Maximale Einnahmen für STL Sales
 
 ---
 

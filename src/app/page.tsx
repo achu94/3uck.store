@@ -12,6 +12,7 @@ import { FeaturesSection } from "@/components/home/FeaturesSection";
 import { BenefitsSection } from "@/components/home/BenefitsSection";
 import { RoadMapSection } from "@/components/home/RoadmapSection";
 import { FooterSection } from "@/components/home/FooterSection";
+import { FloatingFeedback } from "@/components/home/FloatingFeedback";
 
 export default function Home() {
     const router = useRouter();
@@ -29,6 +30,7 @@ export default function Home() {
 
     return (
         <main className="min-h-screen mx-auto">
+            <FloatingFeedback />
             <BannerSection show={true} />
             <NavbarSection />
             <HeroSection />

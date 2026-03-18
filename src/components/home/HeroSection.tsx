@@ -55,7 +55,7 @@ export function HeroSection() {
                     </div>
                     <div className="flex items-center gap-2">
                         <Check className="w-4 h-4 text-green-600" />
-                        <span>Keine Gebühren</span>
+                        <span>Faire Gebühren</span>
                     </div>
                     <div className="flex items-center gap-2">
                         <Check className="w-4 h-4 text-green-600" />
