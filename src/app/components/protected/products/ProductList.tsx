@@ -208,6 +208,7 @@ export function ProductList({ products }: ProductListProps) {
                                     alt={product.title ?? ""}
                                     width={50}
                                     height={50}
+                                    unoptimized
                                     className="rounded-md object-cover"
                                 />
                             </TableCell>
