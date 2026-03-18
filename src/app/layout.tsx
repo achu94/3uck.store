@@ -72,8 +72,8 @@ export const metadata = {
     metadataBase: new URL("https://3uck.store"),
 
     robots: {
-        index: false,
-        follow: false,
+        index: true,
+        follow: true,
     },
 };
 
