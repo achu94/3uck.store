@@ -3,6 +3,7 @@ import "@/app/globals.css";
 import { Geist, Geist_Mono, JetBrains_Mono } from "next/font/google";
 import Provider from "@/components/Provider";
 import { Toaster } from "@/components/ui/sonner";
+import Script from "next/script";
 
 const jetbrainsMono = JetBrains_Mono({
     subsets: ["latin"],
@@ -94,6 +95,14 @@ export default function RootLayout({
             className={jetbrainsMono.variable}
             suppressHydrationWarning
         >
+            <head>
+                <Script
+                    defer
+                    src="https://cloud.umami.is/script.js"
+                    data-website-id="202af267-80fb-49a0-96fb-669616512829"
+                    strategy="afterInteractive"
+                />
+            </head>
             <body
                 className={`${geistSans.variable} ${geistMono.variable} antialiased`}
             >
