@@ -16,3 +16,25 @@ export default async function Page({ params }: PageProps) {
 
     return <PublicStore storeSlug={slug} />;
 }
+
+export async function generateMetadata({ params }: PageProps) {
+    // 1. Await params (Wichtig für Next.js 15)
+    const { storeSlug } = await params;
+
+    // 2. Formatieren (Erster Buchstabe groß sieht im Tab schöner aus)
+    const displayTitle = storeSlug.charAt(0).toUpperCase() + storeSlug.slice(1);
+
+    return {
+        title: `${displayTitle} | 3uck.store`,
+        openGraph: {
+            images: [
+                {
+                    // URL-Encoding für Sonderzeichen/Leerzeichen im Shopnamen
+                    url: `/api/og?title=${encodeURIComponent(displayTitle)}`,
+                    width: 1200,
+                    height: 630,
+                },
+            ],
+        },
+    };
+}
