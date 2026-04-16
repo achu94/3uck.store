@@ -19,7 +19,7 @@ import {
     StoreIcon,
     FolderTree,
     Package,
-    Home,
+    Settings,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
@@ -85,6 +85,14 @@ export function AppSidebar() {
                             "Go to products",
                             Package,
                             "/dashboard/products",
+                        )}
+                    </SidebarMenu>
+                    <SidebarMenu>
+                        {GenerateSidebarMenuItem(
+                            "Einstellungen",
+                            "Settings",
+                            Settings,
+                            "/dashboard/settings",
                         )}
                     </SidebarMenu>
                 </SidebarGroup>
