@@ -1,4 +1,3 @@
-// src/app/components/protected/products/CreateProduct/CreateProduct.tsx
 "use client";
 
 import { useState, useTransition } from "react";
@@ -9,15 +8,14 @@ import { toast } from "sonner";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 
-// Deine Sections
 import { ImageUploadSection } from "./ImageUploadSection";
 import { BasicInfoSection } from "./BasicInfoSection";
 import { MaterialSection } from "./MaterialSection";
 import { ColorSection } from "./ColorSection";
 import { SizeSection } from "./SizeSection";
 import { DescriptionSection } from "./DescriptionSection";
+import { StatusSection } from "./StatusSection";
 
-// Actions & Types
 import { ProductRow, UpdateProductInput } from "@/schemas/product.schema";
 import { updateProduct } from "@/actions/products/update-product";
 import { Label } from "@/components/ui/label";
@@ -44,14 +42,13 @@ export function CreateProduct({ initialProduct }: CreateProductProps) {
         status: (initialProduct.status as "draft" | "published") || "draft",
     });
 
-    const handleSubmit = async (shouldBeDraft: boolean) => {
+    const handleSubmit = async () => {
         setErrors({});
 
         startTransition(async () => {
             const payload = {
                 ...formData,
-                status: shouldBeDraft ? "draft" : "published",
-                product_images: []
+                product_images: [],
             };
 
             const result = await updateProduct(initialProduct.id, payload);
@@ -68,9 +65,9 @@ export function CreateProduct({ initialProduct }: CreateProductProps) {
             }
 
             toast.success(
-                shouldBeDraft
-                    ? "Entwurf gespeichert"
-                    : "Produkt veröffentlicht!",
+                formData.status === "published"
+                    ? "Produkt veröffentlicht!"
+                    : "Entwurf gespeichert",
             );
             router.push("/dashboard/products");
             router.refresh();
@@ -80,7 +77,6 @@ export function CreateProduct({ initialProduct }: CreateProductProps) {
     return (
         <div className="min-h-screen bg-background text-foreground">
             <div className="mx-auto w-full max-w-6xl p-4 sm:p-6 space-y-8">
-                {/* Header Bereich analog zum StoreManager */}
                 <div className="flex flex-col gap-2">
                     <h1 className="text-3xl font-bold leading-tight">
                         Produkt bearbeiten
@@ -91,7 +87,6 @@ export function CreateProduct({ initialProduct }: CreateProductProps) {
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-                    {/* Linke Seite: Media (Sticky) */}
                     <div className="lg:col-span-5 space-y-6 lg:sticky lg:top-6">
                         <Card>
                             <CardContent className="p-6">
@@ -160,7 +155,6 @@ export function CreateProduct({ initialProduct }: CreateProductProps) {
                         </Card>
                     </div>
 
-                    {/* Rechte Seite: Formular-Daten */}
                     <div className="lg:col-span-7 space-y-6">
                         <Card>
                             <CardContent className="p-6 space-y-10">
@@ -227,8 +221,19 @@ export function CreateProduct({ initialProduct }: CreateProductProps) {
                                     }
                                 />
 
-                                {/* FOOTER ACTIONS */}
-                                <div className="flex flex-col sm:flex-row items-center gap-4 pt-6">
+                                <Separator />
+
+                                <StatusSection
+                                    isDraft={formData.status === "draft"}
+                                    onChange={(isDraft) =>
+                                        setFormData((prev) => ({
+                                            ...prev,
+                                            status: isDraft ? "draft" : "published",
+                                        }))
+                                    }
+                                />
+
+                                <div className="flex flex-col sm:flex-row items-center gap-4 pt-2">
                                     <Button
                                         variant="ghost"
                                         className="w-full sm:w-auto"
@@ -238,32 +243,19 @@ export function CreateProduct({ initialProduct }: CreateProductProps) {
                                         Abbrechen
                                     </Button>
 
-                                    <div className="flex flex-1 w-full gap-3">
-                                        <Button
-                                            variant="secondary"
-                                            className="flex-1"
-                                            onClick={() => handleSubmit(true)}
-                                            disabled={isPending}
-                                        >
-                                            {isPending ? (
-                                                <Loader2 className="h-4 w-4 animate-spin" />
-                                            ) : (
-                                                "Entwurf"
-                                            )}
-                                        </Button>
-
-                                        <Button
-                                            className="flex-[1.5]"
-                                            onClick={() => handleSubmit(false)}
-                                            disabled={isPending}
-                                        >
-                                            {isPending ? (
-                                                <Loader2 className="h-4 w-4 animate-spin" />
-                                            ) : (
-                                                "Veröffentlichen"
-                                            )}
-                                        </Button>
-                                    </div>
+                                    <Button
+                                        className="flex-1 w-full"
+                                        onClick={handleSubmit}
+                                        disabled={isPending}
+                                    >
+                                        {isPending ? (
+                                            <Loader2 className="h-4 w-4 animate-spin" />
+                                        ) : formData.status === "published" ? (
+                                            "Speichern & Veröffentlichen"
+                                        ) : (
+                                            "Als Entwurf speichern"
+                                        )}
+                                    </Button>
                                 </div>
                             </CardContent>
                         </Card>
