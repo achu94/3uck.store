@@ -33,16 +33,17 @@ export async function PublicStore({ storeSlug }: { storeSlug: string }) {
                                 unoptimized
                             />
                         )}
-                        <div className="space-y-1">
-                            <div className="flex items-center gap-3">
+                        <div className="space-y-1.5">
+                            <div className="flex items-center gap-3 flex-wrap">
                                 <h1 className="text-2xl font-bold">{store.name}</h1>
                                 <Badge variant="secondary">{store.type === "print" ? "3D-Druck" : "3D-Modelle"}</Badge>
+                                <Badge variant={store.is_active ? "default" : "secondary"}>
+                                    {store.is_active ? "Aktiv" : "Inaktiv"}
+                                </Badge>
                             </div>
-                            {(store.review_count ?? 0) > 0 && (
-                                <div className="text-yellow-400">
-                                    <StarDisplay value={store.average_rating} count={store.review_count} />
-                                </div>
-                            )}
+                            <div className="text-yellow-400">
+                                <StarDisplay value={store.average_rating} count={store.review_count} />
+                            </div>
                             {store.description && (
                                 <p className="text-muted-foreground text-sm max-w-xl">{store.description}</p>
                             )}
