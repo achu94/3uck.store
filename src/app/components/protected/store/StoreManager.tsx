@@ -12,7 +12,7 @@ import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-import { Star, Plus, Box, Mail, Package } from "lucide-react";
+import { Star, Plus, Box, Mail, Package, ShoppingBag } from "lucide-react";
 
 import { cn, getAssetsUrl } from "@/lib/utils";
 import Link from "next/link";
@@ -65,31 +65,34 @@ export function StoreManager({ store, categories, products, reviews }: StoreMana
                                 </div>
 
                                 <div className="flex flex-col gap-2 w-full">
-                                    {(store.review_count ?? 0) > 0 && (
-                                        <div className="flex items-center gap-2">
-                                            <div className="flex items-center gap-0.5">
-                                                {Array.from({ length: 5 }).map((_, idx) => (
-                                                    <Star
-                                                        key={idx}
-                                                        className={`h-4 w-4 ${
-                                                            idx < Math.round(store.average_rating ?? 0)
-                                                                ? "fill-yellow-400 text-yellow-400"
-                                                                : "text-muted-foreground"
-                                                        }`}
-                                                    />
-                                                ))}
-                                            </div>
-                                            <span className="text-sm font-medium">
-                                                {store.average_rating?.toFixed(1)} ({store.review_count})
-                                            </span>
+                                    {/* Rating */}
+                                    <div className="flex items-center gap-2">
+                                        <div className="flex items-center gap-0.5">
+                                            {Array.from({ length: 5 }).map((_, idx) => (
+                                                <Star
+                                                    key={idx}
+                                                    className={`h-4 w-4 ${
+                                                        idx < Math.round(store.average_rating ?? 0)
+                                                            ? "fill-yellow-400 text-yellow-400"
+                                                            : "text-muted-foreground"
+                                                    }`}
+                                                />
+                                            ))}
                                         </div>
-                                    )}
-
-                                    <div className="flex items-center gap-2 flex-wrap">
-                                        <Badge className="w-fit">
-                                            {store.is_active ? "Aktiv" : "Inaktiv"}
-                                        </Badge>
+                                        <span className="text-sm text-muted-foreground">
+                                            {(store.review_count ?? 0) > 0
+                                                ? `${store.average_rating?.toFixed(1)} (${store.review_count})`
+                                                : "Noch keine Bewertungen"}
+                                        </span>
                                     </div>
+
+                                    {/* Status */}
+                                    <Badge
+                                        className="w-fit"
+                                        variant={store.is_active ? "default" : "secondary"}
+                                    >
+                                        {store.is_active ? "Aktiv" : "Inaktiv"}
+                                    </Badge>
                                 </div>
                             </div>
 
@@ -145,6 +148,13 @@ export function StoreManager({ store, categories, products, reviews }: StoreMana
                                         <span>
                                             <span className="text-foreground font-medium">{categories.length}</span>{" "}
                                             Kategorien
+                                        </span>
+                                    </div>
+                                    <div className="flex items-center gap-2 text-muted-foreground">
+                                        <ShoppingBag className="h-4 w-4" />
+                                        <span>
+                                            <span className="text-foreground font-medium">0</span>{" "}
+                                            Verkäufe
                                         </span>
                                     </div>
                                 </div>
