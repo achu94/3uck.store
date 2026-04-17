@@ -26,7 +26,7 @@ export async function getPublicProductBySlug(
     const { data, error } = await supabase
         .from("products")
         .select(
-            "id, title, description, price, main_image_url, slug, available_colors, available_materials, available_sizes, store_id, average_rating, review_count",
+            "id, title, description, price, main_image_url, slug, available_colors, available_materials, available_sizes, store_id",
         )
         .eq("store_id", storeId)
         .eq("slug", productSlug)
@@ -37,5 +37,16 @@ export async function getPublicProductBySlug(
         return null;
     }
 
-    return data as PublicProductDetail;
+    // Try to fetch rating columns — they may not exist before the reviews migration is applied
+    const { data: ratingData } = await supabase
+        .from("products")
+        .select("average_rating, review_count")
+        .eq("id", data.id)
+        .single();
+
+    return {
+        ...data,
+        average_rating: (ratingData as { average_rating?: number | null } | null)?.average_rating ?? null,
+        review_count: (ratingData as { review_count?: number | null } | null)?.review_count ?? null,
+    } as PublicProductDetail;
 }
