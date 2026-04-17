@@ -39,3 +39,8 @@ next-env.d.ts
 
 # CLAW AGENT
 CLAW-RULES.md
+CLAUDE.md
+TASKS.md
+agent.patch
+agent_log.txt
+supabase/.temp/

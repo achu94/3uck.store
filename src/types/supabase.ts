@@ -99,6 +99,7 @@ export type Database = {
           available_materials: string[] | null
           available_sizes: string[] | null
           average_rating: number | null
+          review_count: number | null
           category_id: number | null
           created_at: string
           description: string | null
@@ -118,6 +119,7 @@ export type Database = {
           available_materials?: string[] | null
           available_sizes?: string[] | null
           average_rating?: number | null
+          review_count?: number | null
           category_id?: number | null
           created_at?: string
           description?: string | null
@@ -137,6 +139,7 @@ export type Database = {
           available_materials?: string[] | null
           available_sizes?: string[] | null
           average_rating?: number | null
+          review_count?: number | null
           category_id?: number | null
           created_at?: string
           description?: string | null
@@ -168,6 +171,61 @@ export type Database = {
           },
         ]
       }
+      reviews: {
+        Row: {
+          id: string
+          user_id: string
+          product_id: string | null
+          store_id: number | null
+          rating: number
+          comment: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          product_id?: string | null
+          store_id?: number | null
+          rating: number
+          comment?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          product_id?: string | null
+          store_id?: number | null
+          rating?: number
+          comment?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reviews_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reviews_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reviews_store_id_fkey"
+            columns: ["store_id"]
+            isOneToOne: false
+            referencedRelation: "stores"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       stores: {
         Row: {
           contact_email: string | null
@@ -182,6 +240,8 @@ export type Database = {
           updated_at: string
           user_id: string
           uuid: string
+          average_rating: number | null
+          review_count: number | null
         }
         Insert: {
           contact_email?: string | null
@@ -196,6 +256,8 @@ export type Database = {
           updated_at?: string
           user_id: string
           uuid?: string
+          average_rating?: number | null
+          review_count?: number | null
         }
         Update: {
           contact_email?: string | null
@@ -210,6 +272,8 @@ export type Database = {
           updated_at?: string
           user_id?: string
           uuid?: string
+          average_rating?: number | null
+          review_count?: number | null
         }
         Relationships: [
           {

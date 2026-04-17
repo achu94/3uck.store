@@ -6,6 +6,8 @@ import { getPublicProductBySlug } from "@/actions/products/get-public-product-by
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
+import { ProductReviewSection } from "./reviews/ProductReviewSection";
+import { StarDisplay } from "./reviews/StarRating";
 
 type Props = {
     storeSlug: string;
@@ -61,6 +63,14 @@ export async function PublicProduct({ storeSlug, productSlug }: Props) {
                         <div className="space-y-2">
                             <h1 className="text-2xl font-bold">{product.title}</h1>
                             <p className="text-2xl font-semibold">{formattedPrice}</p>
+                            {(product.review_count ?? 0) > 0 && (
+                                <div className="text-yellow-400">
+                                    <StarDisplay
+                                        value={product.average_rating}
+                                        count={product.review_count}
+                                    />
+                                </div>
+                            )}
                         </div>
 
                         {product.description && (
@@ -122,6 +132,17 @@ export async function PublicProduct({ storeSlug, productSlug }: Props) {
                             In den Warenkorb (demnächst)
                         </Button>
                     </div>
+                </div>
+
+                <div className="mt-12">
+                    <Separator className="mb-8" />
+                    <ProductReviewSection
+                        productId={product.id}
+                        storeSlug={storeSlug}
+                        productSlug={productSlug}
+                        averageRating={product.average_rating ?? null}
+                        reviewCount={product.review_count ?? null}
+                    />
                 </div>
             </div>
         </main>
