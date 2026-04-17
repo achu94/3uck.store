@@ -78,11 +78,11 @@ export function StarDisplay({ value, count }: { value: number | null; count?: nu
                     </svg>
                 ))}
             </div>
-            {value !== null && value !== undefined && (
-                <span className="text-sm text-muted-foreground">
-                    {value.toFixed(1)}{count != null ? ` (${count})` : ""}
-                </span>
-            )}
+            <span className="text-sm text-muted-foreground">
+                {(count ?? 0) > 0
+                    ? `${value?.toFixed(1)} (${count} Bewertungen)`
+                    : "Noch keine Bewertungen"}
+            </span>
         </div>
     );
 }
