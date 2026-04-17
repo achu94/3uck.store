@@ -1,116 +1,55 @@
 "use client";
 
 import type { Store } from "@/types/db";
+import type { GetCategoriesResult } from "@/actions/category/get-category";
+import type { GetProductsResult } from "@/actions/products/get-products";
+import type { ReviewWithUser } from "@/actions/reviews/get-product-reviews";
 import { redirect } from "next/navigation";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-import {
-    Star,
-    Plus,
-    BadgeCheck,
-    Box,
-    Mail,
-    ShoppingBag,
-    Sparkles,
-} from "lucide-react";
+import { Star, Plus, Box, Mail, Package } from "lucide-react";
 
 import { cn, getAssetsUrl } from "@/lib/utils";
 import Link from "next/link";
+import Image from "next/image";
 
 type StoreManagerProps = {
     store: Store | null;
+    categories: NonNullable<GetCategoriesResult>;
+    products: NonNullable<GetProductsResult>;
+    reviews: ReviewWithUser[];
 };
 
-type ItemPlaceholder = {
-    id: string;
-    name: string;
-    price: string;
-    image_url: string | null;
-    description?: string | null;
-    rating?: number | null;
-    sales?: number | null;
-};
-
-type CategoryPlaceholder = {
-    id: string;
-    name: string;
-    items: ItemPlaceholder[];
-};
-
-export function StoreManager({ store }: StoreManagerProps) {
+export function StoreManager({ store, categories, products, reviews }: StoreManagerProps) {
     if (!store) redirect("/store/create");
 
     const storeAssetUrl = getAssetsUrl("STORE");
-
+    const itemAssetUrl = getAssetsUrl("ITEM");
     const storeInitial = (store.name?.[0] ?? "S").toUpperCase();
 
-    // ✅ Platzhalter-Daten (später ersetzen durch echte DB Daten)
-    const rating = 4.8;
-    const salesCount = 123;
-    const verifiedStore = true;
+    const categoriesWithProducts = categories.map((cat) => ({
+        ...cat,
+        items: products.filter((p) => (p as any).category_id === cat.id),
+    }));
 
-    const categories: CategoryPlaceholder[] = [
-        {
-            id: "cat-1",
-            name: "Kategorie X",
-            items: [
-                {
-                    id: "i-1",
-                    name: "Item 1",
-                    price: "9.99€",
-                    image_url: null,
-                    description: "Kurze Item Beschreibung (Platzhalter)…",
-                    rating: 4.9,
-                    sales: 44,
-                },
-                {
-                    id: "i-2",
-                    name: "Item 2",
-                    price: "14.99€",
-                    image_url:
-                        "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=900&q=60",
-                    description: "Noch ein Item mit Bild…",
-                    rating: 4.7,
-                    sales: 21,
-                },
-            ],
-        },
-        {
-            id: "cat-2",
-            name: "Kategorie Y",
-            items: [
-                {
-                    id: "i-3",
-                    name: "Item 3",
-                    price: "29.99€",
-                    image_url: null,
-                    description: "Platzhalter Beschreibung…",
-                    rating: 4.8,
-                    sales: 8,
-                },
-            ],
-        },
-    ];
-
-    const comments = [
-        { id: "c1", user: "Max", text: "Sehr guter Store!" },
-        { id: "c2", user: "Anna", text: "Schneller Versand ✅" },
-    ];
+    const uncategorized = products.filter(
+        (p) => !(p as any).category_id || !categories.find((c) => c.id === (p as any).category_id),
+    );
 
     return (
         <div className="min-h-screen">
             <div className="mx-auto w-full max-w-6xl p-4 sm:p-6 space-y-6">
-                {/* ✅ STORE HEADER */}
+
+                {/* STORE HEADER */}
                 <Card className="overflow-hidden">
                     <CardContent className="p-6">
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
-                            {/* LEFT: LOGO + STATS */}
                             <div className="flex flex-col items-center md:items-start gap-3">
-                                {/* Logo */}
                                 <div className="w-28 h-28 rounded-2xl border bg-background flex items-center justify-center overflow-hidden">
                                     {store.logo_url ? (
                                         <img
@@ -125,63 +64,35 @@ export function StoreManager({ store }: StoreManagerProps) {
                                     )}
                                 </div>
 
-                                {/* rating + sales */}
                                 <div className="flex flex-col gap-2 w-full">
-                                    {/* Stars */}
-                                    <div className="flex items-center gap-2">
-                                        <div className="flex items-center gap-0.5">
-                                            {Array.from({ length: 5 }).map(
-                                                (_, idx) => (
+                                    {(store.review_count ?? 0) > 0 && (
+                                        <div className="flex items-center gap-2">
+                                            <div className="flex items-center gap-0.5">
+                                                {Array.from({ length: 5 }).map((_, idx) => (
                                                     <Star
                                                         key={idx}
                                                         className={`h-4 w-4 ${
-                                                            idx <
-                                                            Math.round(rating)
+                                                            idx < Math.round(store.average_rating ?? 0)
                                                                 ? "fill-yellow-400 text-yellow-400"
                                                                 : "text-muted-foreground"
                                                         }`}
                                                     />
-                                                ),
-                                            )}
-                                        </div>
-                                        <span className="text-sm font-medium">
-                                            {rating}
-                                        </span>
-                                    </div>
-
-                                    {/* Verkäufe */}
-                                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                                        <ShoppingBag className="h-4 w-4" />
-                                        <span>
-                                            Verkäufe:{" "}
-                                            <span className="text-foreground font-medium">
-                                                {salesCount}
+                                                ))}
+                                            </div>
+                                            <span className="text-sm font-medium">
+                                                {store.average_rating?.toFixed(1)} ({store.review_count})
                                             </span>
-                                        </span>
-                                    </div>
+                                        </div>
+                                    )}
 
-                                    {/* Status Badge */}
                                     <div className="flex items-center gap-2 flex-wrap">
                                         <Badge className="w-fit">
-                                            {store.is_active
-                                                ? "Aktiv"
-                                                : "Inaktiv"}
+                                            {store.is_active ? "Aktiv" : "Inaktiv"}
                                         </Badge>
-
-                                        {verifiedStore && (
-                                            <Badge
-                                                variant="secondary"
-                                                className="gap-1"
-                                            >
-                                                <BadgeCheck className="h-4 w-4" />
-                                                Verified Store
-                                            </Badge>
-                                        )}
                                     </div>
                                 </div>
                             </div>
 
-                            {/* RIGHT: STORE INFO */}
                             <div className="md:col-span-2 space-y-3">
                                 <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
                                     <div>
@@ -189,55 +100,51 @@ export function StoreManager({ store }: StoreManagerProps) {
                                             <h1 className="text-2xl sm:text-3xl font-bold leading-tight">
                                                 {store.name}
                                             </h1>
-
-                                            <Badge
-                                                variant="outline"
-                                                className="gap-1"
-                                            >
-                                                <Sparkles className="h-4 w-4" />
-                                                3D Print
+                                            <Badge variant="outline">
+                                                {store.type === "print" ? "3D-Druck" : "3D-Modelle"}
                                             </Badge>
                                         </div>
-
-                                        <p className="text-sm text-muted-foreground">
-                                            @{store.slug}
-                                        </p>
+                                        <p className="text-sm text-muted-foreground">@{store.slug}</p>
                                     </div>
 
-                                    {/* Owner Actions */}
                                     <div className="flex gap-2">
-                                        <Button size="sm" className="gap-2">
+                                        <Link
+                                            href="/dashboard/products/new"
+                                            className={cn(buttonVariants({ size: "sm" }), "gap-2")}
+                                        >
                                             <Plus className="h-4 w-4" />
-                                            Kategorie hinzufügen
-                                        </Button>
+                                            Produkt hinzufügen
+                                        </Link>
                                     </div>
                                 </div>
 
                                 <p className="text-sm sm:text-base text-muted-foreground">
-                                    {store.description ??
-                                        "Keine Beschreibung vorhanden..."}
+                                    {store.description ?? "Keine Beschreibung vorhanden."}
                                 </p>
 
                                 <Separator />
 
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
-                                    <div className="flex items-center gap-2 text-muted-foreground">
-                                        <Mail className="h-4 w-4" />
-                                        <span>
-                                            Kontakt:{" "}
-                                            <span className="text-foreground font-medium">
-                                                {store.contact_email ?? "—"}
+                                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-sm">
+                                    {store.contact_email && (
+                                        <div className="flex items-center gap-2 text-muted-foreground">
+                                            <Mail className="h-4 w-4" />
+                                            <span className="text-foreground font-medium truncate">
+                                                {store.contact_email}
                                             </span>
+                                        </div>
+                                    )}
+                                    <div className="flex items-center gap-2 text-muted-foreground">
+                                        <Package className="h-4 w-4" />
+                                        <span>
+                                            <span className="text-foreground font-medium">{products.length}</span>{" "}
+                                            Produkte
                                         </span>
                                     </div>
-
                                     <div className="flex items-center gap-2 text-muted-foreground">
                                         <Box className="h-4 w-4" />
                                         <span>
-                                            Typ:{" "}
-                                            <span className="text-foreground font-medium">
-                                                {store.type ?? "—"}
-                                            </span>
+                                            <span className="text-foreground font-medium">{categories.length}</span>{" "}
+                                            Kategorien
                                         </span>
                                     </div>
                                 </div>
@@ -246,136 +153,137 @@ export function StoreManager({ store }: StoreManagerProps) {
                     </CardContent>
                 </Card>
 
-                {/* ✅ CATEGORIES + ITEMS */}
+                {/* CATEGORIES + PRODUCTS */}
                 <div className="space-y-6">
                     <div className="flex items-center justify-between">
-                        <h2 className="text-xl font-semibold">Kategorien</h2>
+                        <h2 className="text-xl font-semibold">Produkte nach Kategorie</h2>
+                        <Link
+                            href="/dashboard/categories"
+                            className={cn(buttonVariants({ variant: "outline", size: "sm" }), "gap-2")}
+                        >
+                            <Plus className="h-4 w-4" />
+                            Kategorie verwalten
+                        </Link>
                     </div>
 
-                    {categories.map((cat) => (
-                        <Card key={cat.id} className="overflow-hidden">
-                            <CardHeader className="pb-2">
-                                <div className="flex items-center justify-between gap-3">
-                                    <CardTitle className="text-lg">
-                                        {cat.name}
-                                    </CardTitle>
-
-                                    {/* Owner Action */}
-                                    <Link
-                                        href="/dashboard/products/new"
-                                        className={cn(
-                                            buttonVariants({
-                                                variant: "outline",
-                                                size: "sm",
-                                            }),
-                                            "gap-2",
-                                        )}
-                                    >
-                                        <Plus className="h-4 w-4" />
-                                        Product hinzufügen
-                                    </Link>
-                                </div>
-                            </CardHeader>
-
-                            <CardContent className="space-y-4">
-                                {/* ✅ Responsive Items Grid */}
-                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                                    {cat.items.map((item) => {
-                                        const itemImage =
-                                            item.image_url ??
-                                            "https://placehold.co/600x400?text=";
-
-                                        return (
-                                            <Card
-                                                key={item.id}
-                                                className="group overflow-hidden border bg-background transition hover:shadow-lg hover:border-primary/30"
-                                            >
-                                                {/* Image */}
-                                                <div className="aspect-[4/3] w-full bg-muted overflow-hidden relative">
-                                                    {item.image_url ? (
-                                                        <img
-                                                            src={itemImage}
-                                                            alt={item.name}
-                                                            className="h-full w-full object-cover transition duration-300 group-hover:scale-[1.03]"
-                                                            loading="lazy"
-                                                        />
-                                                    ) : (
-                                                        <div className="h-full w-full flex flex-col items-center justify-center gap-2 text-muted-foreground">
-                                                            <Box className="h-8 w-8" />
-                                                            <span className="text-sm">
-                                                                Kein Bild
-                                                            </span>
-                                                        </div>
-                                                    )}
-                                                </div>
-
-                                                {/* Content */}
-                                                <CardContent className="p-4 space-y-3">
-                                                    <div className="flex items-start justify-between gap-3">
-                                                        <div className="min-w-0">
-                                                            <div className="font-semibold truncate">
-                                                                {item.name}
-                                                            </div>
-                                                            <div className="text-xs text-muted-foreground line-clamp-2">
-                                                                {item.description ??
-                                                                    "Kurze Beschreibung (Platzhalter)…"}
-                                                            </div>
-                                                        </div>
-
-                                                        <div className="text-sm font-bold whitespace-nowrap">
-                                                            {item.price ?? "—"}
-                                                        </div>
-                                                    </div>
-
-                                                    {/* Footer */}
-                                                    <div className="flex items-center justify-between gap-2">
-                                                        <div className="text-xs text-muted-foreground">
-                                                            ⭐{" "}
-                                                            {item.rating ?? "—"}{" "}
-                                                            • Verkäufe{" "}
-                                                            {item.sales ?? "—"}
-                                                        </div>
-
-                                                        <Button
-                                                            size="sm"
-                                                            variant="secondary"
-                                                        >
-                                                            Bearbeiten
-                                                        </Button>
-                                                    </div>
-                                                </CardContent>
-                                            </Card>
-                                        );
-                                    })}
-                                </div>
+                    {categories.length === 0 && products.length === 0 ? (
+                        <Card>
+                            <CardContent className="py-12 text-center text-muted-foreground">
+                                <Box className="h-10 w-10 mx-auto mb-3 stroke-[1.5]" />
+                                <p className="font-medium">Noch keine Produkte oder Kategorien.</p>
+                                <p className="text-sm mt-1">Erstelle zuerst Kategorien, dann füge Produkte hinzu.</p>
                             </CardContent>
                         </Card>
-                    ))}
+                    ) : (
+                        <>
+                            {categoriesWithProducts.map((cat) => (
+                                <Card key={cat.id} className="overflow-hidden">
+                                    <CardHeader className="pb-2">
+                                        <div className="flex items-center justify-between gap-3">
+                                            <CardTitle className="text-lg">{cat.name}</CardTitle>
+                                            <Link
+                                                href="/dashboard/products/new"
+                                                className={cn(
+                                                    buttonVariants({ variant: "outline", size: "sm" }),
+                                                    "gap-2",
+                                                )}
+                                            >
+                                                <Plus className="h-4 w-4" />
+                                                Produkt hinzufügen
+                                            </Link>
+                                        </div>
+                                    </CardHeader>
+                                    <CardContent>
+                                        {cat.items.length === 0 ? (
+                                            <p className="text-sm text-muted-foreground py-4">
+                                                Keine Produkte in dieser Kategorie.
+                                            </p>
+                                        ) : (
+                                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                                                {cat.items.map((item) => (
+                                                    <ProductCard
+                                                        key={item.id}
+                                                        item={item}
+                                                        itemAssetUrl={itemAssetUrl}
+                                                    />
+                                                ))}
+                                            </div>
+                                        )}
+                                    </CardContent>
+                                </Card>
+                            ))}
+
+                            {uncategorized.length > 0 && (
+                                <Card className="overflow-hidden">
+                                    <CardHeader className="pb-2">
+                                        <CardTitle className="text-lg text-muted-foreground">
+                                            Ohne Kategorie
+                                        </CardTitle>
+                                    </CardHeader>
+                                    <CardContent>
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                                            {uncategorized.map((item) => (
+                                                <ProductCard
+                                                    key={item.id}
+                                                    item={item}
+                                                    itemAssetUrl={itemAssetUrl}
+                                                />
+                                            ))}
+                                        </div>
+                                    </CardContent>
+                                </Card>
+                            )}
+                        </>
+                    )}
                 </div>
 
-                {/* ✅ COMMENTS */}
+                {/* REVIEWS */}
                 <Card>
                     <CardHeader>
-                        <CardTitle className="text-xl">Kommentare</CardTitle>
+                        <CardTitle className="text-xl">
+                            Bewertungen{" "}
+                            {reviews.length > 0 && (
+                                <span className="text-muted-foreground font-normal text-base">
+                                    ({reviews.length})
+                                </span>
+                            )}
+                        </CardTitle>
                     </CardHeader>
-
                     <CardContent className="space-y-3">
-                        {comments.length === 0 ? (
-                            <div className="text-sm text-muted-foreground">
-                                Noch keine Kommentare vorhanden.
-                            </div>
+                        {reviews.length === 0 ? (
+                            <p className="text-sm text-muted-foreground">Noch keine Bewertungen vorhanden.</p>
                         ) : (
-                            comments.map((c) => (
-                                <div
-                                    key={c.id}
-                                    className="rounded-xl border bg-background p-3"
-                                >
-                                    <div className="text-sm font-medium">
-                                        {c.user}
+                            reviews.map((r) => (
+                                <div key={r.id} className="rounded-xl border bg-background p-4 space-y-2">
+                                    <div className="flex items-center gap-3">
+                                        <Avatar className="h-8 w-8">
+                                            <AvatarImage src={r.user.image ?? undefined} />
+                                            <AvatarFallback>
+                                                {(r.user.name?.[0] ?? "?").toUpperCase()}
+                                            </AvatarFallback>
+                                        </Avatar>
+                                        <div className="flex-1 min-w-0">
+                                            <p className="text-sm font-medium">{r.user.name ?? "Anonym"}</p>
+                                            <div className="flex items-center gap-0.5">
+                                                {Array.from({ length: 5 }).map((_, idx) => (
+                                                    <Star
+                                                        key={idx}
+                                                        className={`h-3 w-3 ${
+                                                            idx < r.rating
+                                                                ? "fill-yellow-400 text-yellow-400"
+                                                                : "text-muted-foreground"
+                                                        }`}
+                                                    />
+                                                ))}
+                                            </div>
+                                        </div>
+                                        <span className="text-xs text-muted-foreground shrink-0">
+                                            {new Date(r.created_at).toLocaleDateString("de-DE")}
+                                        </span>
                                     </div>
-                                    <div className="text-sm text-muted-foreground">
-                                        {c.text}
-                                    </div>
+                                    {r.comment && (
+                                        <p className="text-sm text-muted-foreground">{r.comment}</p>
+                                    )}
                                 </div>
                             ))
                         )}
@@ -383,5 +291,60 @@ export function StoreManager({ store }: StoreManagerProps) {
                 </Card>
             </div>
         </div>
+    );
+}
+
+function ProductCard({
+    item,
+    itemAssetUrl,
+}: {
+    item: NonNullable<GetProductsResult>[number];
+    itemAssetUrl: string;
+}) {
+    return (
+        <Card className="group overflow-hidden border bg-background transition hover:shadow-md hover:border-primary/30">
+            <div className="aspect-[4/3] w-full bg-muted overflow-hidden relative">
+                {item.main_image_url ? (
+                    <Image
+                        src={`${itemAssetUrl}/${item.main_image_url}`}
+                        alt={item.title ?? ""}
+                        fill
+                        className="object-cover transition duration-300 group-hover:scale-[1.03]"
+                        unoptimized
+                    />
+                ) : (
+                    <div className="h-full w-full flex flex-col items-center justify-center gap-2 text-muted-foreground">
+                        <Box className="h-8 w-8" />
+                        <span className="text-sm">Kein Bild</span>
+                    </div>
+                )}
+            </div>
+            <CardContent className="p-4 space-y-3">
+                <div className="flex items-start justify-between gap-3">
+                    <div className="min-w-0">
+                        <div className="font-semibold truncate">{item.title}</div>
+                        {item.description && (
+                            <div className="text-xs text-muted-foreground line-clamp-2">
+                                {item.description}
+                            </div>
+                        )}
+                    </div>
+                    <div className="text-sm font-bold whitespace-nowrap">
+                        {new Intl.NumberFormat("de-DE", {
+                            style: "currency",
+                            currency: "EUR",
+                        }).format(item.price ?? 0)}
+                    </div>
+                </div>
+                <div className="flex items-center justify-between gap-2">
+                    <Badge variant={item.status === "published" ? "default" : "secondary"}>
+                        {item.status === "published" ? "Veröffentlicht" : "Entwurf"}
+                    </Badge>
+                    <Button asChild size="sm" variant="outline">
+                        <Link href={`/dashboard/products/${item.id}`}>Bearbeiten</Link>
+                    </Button>
+                </div>
+            </CardContent>
+        </Card>
     );
 }

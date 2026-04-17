@@ -44,6 +44,7 @@ export async function getProducts(
             price,
             status,
             main_image_url,
+            category_id,
             created_at
         `,
         )
