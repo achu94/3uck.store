@@ -13,6 +13,8 @@ export type PublicProductDetail = {
     available_materials: string[] | null;
     available_sizes: string[] | null;
     store_id: number;
+    average_rating: number | null;
+    review_count: number | null;
 };
 
 export async function getPublicProductBySlug(
@@ -24,7 +26,7 @@ export async function getPublicProductBySlug(
     const { data, error } = await supabase
         .from("products")
         .select(
-            "id, title, description, price, main_image_url, slug, available_colors, available_materials, available_sizes, store_id",
+            "id, title, description, price, main_image_url, slug, available_colors, available_materials, available_sizes, store_id, average_rating, review_count",
         )
         .eq("store_id", storeId)
         .eq("slug", productSlug)

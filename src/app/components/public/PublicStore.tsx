@@ -6,6 +6,8 @@ import { getPublicProducts } from "@/actions/products/get-public-products";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import { StoreReviewSection } from "./reviews/StoreReviewSection";
+import { StarDisplay } from "./reviews/StarRating";
 
 export async function PublicStore({ storeSlug }: { storeSlug: string }) {
     const store = await getStoreBySlug(storeSlug);
@@ -36,6 +38,11 @@ export async function PublicStore({ storeSlug }: { storeSlug: string }) {
                                 <h1 className="text-2xl font-bold">{store.name}</h1>
                                 <Badge variant="secondary">{store.type === "print" ? "3D-Druck" : "3D-Modelle"}</Badge>
                             </div>
+                            {(store.review_count ?? 0) > 0 && (
+                                <div className="text-yellow-400">
+                                    <StarDisplay value={store.average_rating} count={store.review_count} />
+                                </div>
+                            )}
                             {store.description && (
                                 <p className="text-muted-foreground text-sm max-w-xl">{store.description}</p>
                             )}
@@ -94,6 +101,15 @@ export async function PublicStore({ storeSlug }: { storeSlug: string }) {
                         ))}
                     </div>
                 )}
+
+                <div className="mt-12">
+                    <StoreReviewSection
+                        storeId={store.id}
+                        storeSlug={storeSlug}
+                        averageRating={store.average_rating ?? null}
+                        reviewCount={store.review_count ?? null}
+                    />
+                </div>
             </div>
         </main>
     );
