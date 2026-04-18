@@ -1,13 +1,14 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
+import { auth } from "@/lib/auth";
 import { getStoreBySlug } from "@/actions/store/get-store-by-slug";
 import { getPublicProductBySlug } from "@/actions/products/get-public-product-by-slug";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { Button } from "@/components/ui/button";
 import { ProductReviewSection } from "./reviews/ProductReviewSection";
 import { StarDisplay } from "./reviews/StarRating";
+import { CheckoutButton } from "./CheckoutButton";
 
 type Props = {
     storeSlug: string;
@@ -15,17 +16,12 @@ type Props = {
 };
 
 export async function PublicProduct({ storeSlug, productSlug }: Props) {
-    const store = await getStoreBySlug(storeSlug);
+    const [store, session] = await Promise.all([getStoreBySlug(storeSlug), auth()]);
 
-    if (!store) {
-        notFound();
-    }
+    if (!store) notFound();
 
     const product = await getPublicProductBySlug(store.id, productSlug);
-
-    if (!product) {
-        notFound();
-    }
+    if (!product) notFound();
 
     const imageUrl = product.main_image_url
         ? `${process.env.NEXT_PUBLIC_ITEMS_ASSET_URL}/${product.main_image_url}`
@@ -63,14 +59,9 @@ export async function PublicProduct({ storeSlug, productSlug }: Props) {
                         <div className="space-y-2">
                             <h1 className="text-2xl font-bold">{product.title}</h1>
                             <p className="text-2xl font-semibold">{formattedPrice}</p>
-                            {(product.review_count ?? 0) > 0 && (
-                                <div className="text-yellow-400">
-                                    <StarDisplay
-                                        value={product.average_rating}
-                                        count={product.review_count}
-                                    />
-                                </div>
-                            )}
+                            <div className="text-yellow-400">
+                                <StarDisplay value={product.average_rating} count={product.review_count} />
+                            </div>
                         </div>
 
                         {product.description && (
@@ -89,9 +80,7 @@ export async function PublicProduct({ storeSlug, productSlug }: Props) {
 
                         {product.available_materials && product.available_materials.length > 0 && (
                             <div className="space-y-2">
-                                <h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
-                                    Materialien
-                                </h2>
+                                <h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">Materialien</h2>
                                 <div className="flex flex-wrap gap-2">
                                     {product.available_materials.map((m) => (
                                         <Badge key={m} variant="secondary">{m}</Badge>
@@ -102,9 +91,7 @@ export async function PublicProduct({ storeSlug, productSlug }: Props) {
 
                         {product.available_colors && product.available_colors.length > 0 && (
                             <div className="space-y-2">
-                                <h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
-                                    Farben
-                                </h2>
+                                <h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">Farben</h2>
                                 <div className="flex flex-wrap gap-2">
                                     {product.available_colors.map((c) => (
                                         <Badge key={c} variant="outline">{c}</Badge>
@@ -115,9 +102,7 @@ export async function PublicProduct({ storeSlug, productSlug }: Props) {
 
                         {product.available_sizes && product.available_sizes.length > 0 && (
                             <div className="space-y-2">
-                                <h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
-                                    Größen
-                                </h2>
+                                <h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">Größen</h2>
                                 <div className="flex flex-wrap gap-2">
                                     {product.available_sizes.map((s) => (
                                         <Badge key={s} variant="outline">{s}</Badge>
@@ -128,9 +113,12 @@ export async function PublicProduct({ storeSlug, productSlug }: Props) {
 
                         <Separator />
 
-                        <Button className="w-full" size="lg" disabled>
-                            In den Warenkorb (demnächst)
-                        </Button>
+                        <CheckoutButton
+                            storeId={store.id}
+                            storeSlug={storeSlug}
+                            product={{ id: product.id, title: product.title, price: product.price }}
+                            isLoggedIn={!!session?.user}
+                        />
                     </div>
                 </div>
 
