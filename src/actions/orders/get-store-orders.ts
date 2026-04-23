@@ -42,7 +42,9 @@ export async function getStoreOrders(): Promise<StoreOrder[]> {
         total_price: Number(o.total_price),
         notes: o.notes,
         created_at: o.created_at,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         customer: Array.isArray(o.users) ? o.users[0] : (o.users as any),
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         items: (o.order_items ?? []) as any,
     }));
 }

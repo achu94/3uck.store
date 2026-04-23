@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { auth } from "@/lib/auth";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { LayoutDashboard, LogIn, Package2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 

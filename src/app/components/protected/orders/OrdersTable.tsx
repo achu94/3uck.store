@@ -5,7 +5,6 @@ import type { StoreOrder } from "@/actions/orders/get-store-orders";
 import { updateOrderStatus, type OrderStatus } from "@/actions/orders/update-order-status";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import {

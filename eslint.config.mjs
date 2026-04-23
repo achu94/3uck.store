@@ -1,23 +1,30 @@
-import { FlatCompat } from "@eslint/eslintrc";
-import { dirname } from "path";
-import { fileURLToPath } from "url";
+import tsPlugin from "@typescript-eslint/eslint-plugin";
+import tsParser from "@typescript-eslint/parser";
+import nextPlugin from "@next/eslint-plugin-next";
+import reactHooksPlugin from "eslint-plugin-react-hooks";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-  recommendedConfig: typeScriptEsLintPlugin.configs["recommended"],
-});
-
-export default {
-  extends: [
-    ...compat.extends(
-      "next/core-web-vitals",
-      "eslint:recommended",
-      "plugin:@typescript-eslint/recommended",
-      "plugin:react-hooks/recommended",
-    ),
-  ],
-  ignorePatterns: ["node_modules/*", ".next/*", "!.prettierrc.config.mjs"],
-};
+export default [
+    {
+        ignores: ["node_modules/**", ".next/**"],
+    },
+    {
+        files: ["src/**/*.{ts,tsx}"],
+        languageOptions: {
+            parser: tsParser,
+            parserOptions: {
+                project: "./tsconfig.json",
+            },
+        },
+        plugins: {
+            "@typescript-eslint": tsPlugin,
+            "@next/next": nextPlugin,
+            "react-hooks": reactHooksPlugin,
+        },
+        rules: {
+            ...tsPlugin.configs["recommended"].rules,
+            ...nextPlugin.configs["core-web-vitals"].rules,
+            ...reactHooksPlugin.configs["recommended"].rules,
+            "@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^_", varsIgnorePattern: "^_" }],
+        },
+    },
+];

@@ -18,6 +18,7 @@ import {
     CardTitle,
 } from "../ui/card";
 
+import Link from "next/link";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
@@ -215,9 +216,9 @@ export function WaitListSection() {
                                 Benachrichtigung über den Start von 3uck.store
                                 speichern. Weitere Informationen findest du in
                                 unserer{" "}
-                                <a href="/datenschutz" className="underline">
+                                <Link href="/datenschutz" className="underline">
                                     Datenschutzerklärung
-                                </a>
+                                </Link>
                                 .
                             </p>
                         </form>

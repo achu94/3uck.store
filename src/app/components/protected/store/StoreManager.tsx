@@ -34,10 +34,12 @@ export function StoreManager({ store, categories, products, reviews }: StoreMana
 
     const categoriesWithProducts = categories.map((cat) => ({
         ...cat,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         items: products.filter((p) => (p as any).category_id === cat.id),
     }));
 
     const uncategorized = products.filter(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (p) => !(p as any).category_id || !categories.find((c) => c.id === (p as any).category_id),
     );
 

@@ -42,7 +42,7 @@ export async function PublicStore({ storeSlug }: { storeSlug: string }) {
                                 </Badge>
                             </div>
                             <div className="text-yellow-400">
-                                <StarDisplay value={store.average_rating} count={store.review_count} />
+                                <StarDisplay value={store.average_rating ?? null} count={store.review_count} />
                             </div>
                             {store.description && (
                                 <p className="text-muted-foreground text-sm max-w-xl">{store.description}</p>

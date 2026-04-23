@@ -4,7 +4,6 @@ import * as React from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -53,7 +52,7 @@ export default function RegisterPage() {
             setTimeout(() => {
                 router.push("/dashboard");
             }, 2000);
-        } catch (err) {
+        } catch {
             setError("Registration failed");
         } finally {
             setLoading(false);

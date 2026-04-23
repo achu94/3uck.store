@@ -65,7 +65,7 @@ export function ProductList({ products }: ProductListProps) {
                 try {
                     await deleteProduct(productId);
                     toast.success("Product deleted successfully.");
-                } catch (error) {
+                } catch {
                     toast.error("Failed to delete product.");
                 } finally {
                     setIsDeleting(false);
@@ -86,7 +86,7 @@ export function ProductList({ products }: ProductListProps) {
                     await bulkDeleteProducts(selectedProductIds);
                     toast.success("Products deleted successfully.");
                     setSelectedProductIds([]);
-                } catch (error) {
+                } catch {
                     toast.error("Failed to delete products.");
                 } finally {
                     setIsBulkDeleting(false);
@@ -107,7 +107,7 @@ export function ProductList({ products }: ProductListProps) {
                     await bulkUpdateStatus(selectedProductIds, status);
                     toast.success(`Products updated to ${status}.`);
                     setSelectedProductIds([]);
-                } catch (error) {
+                } catch {
                     toast.error("Failed to update products.");
                 } finally {
                     setIsBulkUpdating(false);

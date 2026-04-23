@@ -8,7 +8,7 @@
         "start": "next start",
         "check": "npm run check:type && npm run check:lint",
         "check:type": "tsc --noEmit",
-        "check:lint": "next lint",
+        "check:lint": "eslint src/",
         "generate-types": "npx supabase gen types typescript --project-id higltrwyrmiijwhzdpvq --schema public > src/types/supabase.ts"
     },
     "dependencies": {

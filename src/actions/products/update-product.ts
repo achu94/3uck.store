@@ -7,7 +7,7 @@ import { revalidatePath } from "next/cache";
 import slugify from "slugify";
 import { updateProductSchema } from "@/schemas/product.schema";
 
-export async function updateProduct(productId: string, rawData: any) {
+export async function updateProduct(productId: string, rawData: Record<string, unknown>) {
     // 1. Auth-Check
     const session = await auth();
     if (!session?.user?.id) return { success: false, error: "Nicht autorisiert" };

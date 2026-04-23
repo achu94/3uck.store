@@ -56,11 +56,12 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
     },
 
     callbacks: {
-        async signIn({ user, account, credentials }) {
+        async signIn({ user, account }) {
+            const u = user as typeof user & { dbUserId?: string; providerId?: string };
             // Credentials login
             if (account?.provider === "credentials") {
-                (user as any).dbUserId = user.id;
-                (user as any).providerId = "credentials";
+                u.dbUserId = user.id;
+                u.providerId = "credentials";
                 return true;
             }
 
@@ -80,17 +81,17 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
                 });
             }
 
-            // nur temporär, für den nächsten Schritt
-            (user as any).dbUserId = dbUser.id;
-            (user as any).providerId = account.providerAccountId;
+            u.dbUserId = dbUser.id;
+            u.providerId = account.providerAccountId;
 
             return true;
         },
 
         async jwt({ token, user }) {
             if (user) {
-                token.userId = (user as any).dbUserId;
-                token.providerId = (user as any).providerId;
+                const u = user as typeof user & { dbUserId?: string; providerId?: string };
+                token.userId = u.dbUserId;
+                token.providerId = u.providerId;
             }
 
             return token;

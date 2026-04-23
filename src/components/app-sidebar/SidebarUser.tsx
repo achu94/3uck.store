@@ -15,11 +15,9 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ChevronsUpDown, LogOut, Settings, User } from "lucide-react";
 import Link from "next/link";
 import {
-    SidebarContent,
     SidebarMenuButton,
     SidebarMenuItem,
 } from "../ui/sidebar";
-import { Button } from "../ui/button";
 
 export function SidebarUser() {
     const { data: session } = useSession();

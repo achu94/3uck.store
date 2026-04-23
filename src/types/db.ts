@@ -17,7 +17,11 @@ export type StoreType = (typeof STORE_TYPES)[number];
 /**
  * Optional: erzwinge StoreType statt string (falls DB type nur string ist)
  */
-export type Store = Omit<StoreRow, "type"> & { type: StoreType };
+export type Store = Omit<StoreRow, "type"> & {
+    type: StoreType;
+    average_rating?: number | null;
+    review_count?: number | null;
+};
 
 /** Inputs (wie du sie hattest) */
 type StoreSystemFields = "id" | "uuid" | "created_at" | "updated_at";

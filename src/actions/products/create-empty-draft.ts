@@ -24,7 +24,7 @@ export async function createEmptyDraft(): Promise<Pick<ProductRow, "id">> {
         id: crypto.randomUUID(),
     });
 
-    const { product_images, ...rest } = partialData;
+    const { product_images: _product_images, ...rest } = partialData;
 
     const draftData = {
         ...rest,

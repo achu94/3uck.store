@@ -4,7 +4,6 @@ import { supabaseServer } from "@/lib/supabaseServer";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 
-import type { Database } from "@/types/supabase";
 import { ProductRow } from "@/schemas/product.schema";
 
 export type Product = ProductRow;
@@ -57,7 +56,7 @@ export async function getProducts(
             return null;
         }
 
-        return [data as any];
+        return [data as unknown as Product];
     }
 
     const { data, error } = await query.order("created_at", {
@@ -68,5 +67,5 @@ export async function getProducts(
         return [];
     }
 
-    return data as any;
+    return data as unknown as Product[];
 }
