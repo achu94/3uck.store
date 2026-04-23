@@ -18,11 +18,12 @@ type Props = {
         price: number;
     };
     isLoggedIn: boolean;
+    selectedOptions?: string;
 };
 
-export function CheckoutButton({ storeId, storeSlug, product, isLoggedIn }: Props) {
+export function CheckoutButton({ storeId, storeSlug, product, isLoggedIn, selectedOptions }: Props) {
     const router = useRouter();
-    const [notes, setNotes] = useState("");
+    const [notes, setNotes] = useState(selectedOptions ?? "");
     const [loading, setLoading] = useState(false);
     const [showNotes, setShowNotes] = useState(false);
 
