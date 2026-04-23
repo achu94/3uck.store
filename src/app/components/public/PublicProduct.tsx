@@ -73,7 +73,14 @@ export async function PublicProduct({ storeSlug, productSlug }: Props) {
                         <ProductSpecsSelector
                             storeId={store.id}
                             storeSlug={storeSlug}
-                            product={{ id: product.id, title: product.title, price: product.price }}
+                            product={{
+                                id: product.id,
+                                title: product.title,
+                                price: product.price,
+                                imageUrl: product.main_image_url
+                                    ? `${process.env.NEXT_PUBLIC_ITEMS_ASSET_URL}/${product.main_image_url}`
+                                    : undefined,
+                            }}
                             availableMaterials={product.available_materials}
                             availableColors={product.available_colors}
                             availableSizes={product.available_sizes}

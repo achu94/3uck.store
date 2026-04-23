@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 import { useSetAtom } from "jotai";
 import { userIdAtom } from "@/atoms/auth";
+import { BasketSync } from "@/components/BasketSync";
 
 function UserAtomSync() {
     const { data: session, status } = useSession();
@@ -27,6 +28,7 @@ export default function Provider({ children }: { children: React.ReactNode }) {
         <SessionProvider>
             <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
                 <UserAtomSync />
+                <BasketSync />
                 {children}
             </ThemeProvider>
         </SessionProvider>
